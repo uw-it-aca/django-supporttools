@@ -10,6 +10,7 @@ Install for development
 * pip install django
 * create django project
 * add supporttools app - git clone git@github.com:charlon/django-supporttools.git supporttools
+* pip install -r supporttools/requirements.txt
 * update project settings.py
 * 
 
