@@ -7,6 +7,7 @@ Install for development
 =======================
 
 * create virtualenv
+* pip install django
 * create django project
 * add supporttools app - git clone git@github.com:charlon/django-supporttools.git supporttools
 * update project settings.py
