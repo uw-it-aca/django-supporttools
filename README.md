@@ -1,7 +1,7 @@
-ACA Django App Scaffold
-=======================
+ACA Support Tools
+=================
 
-A Django app template for creating mobile-first responsive applications.
+A Django app for creating a support tool for individual apps.
 
 Django project dependencies:
 * Django - python web development framework
