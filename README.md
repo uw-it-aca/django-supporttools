@@ -3,8 +3,8 @@ ACA Support Tools
 
 A Django app for creating a support tool for individual apps.
 
-Developers
-==========
+Install for development
+=======================
 
 * create django project
 * turn project into virtualenv
