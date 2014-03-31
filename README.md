@@ -1,2 +1,2 @@
-django-support-tools
-====================
+django-supporttools
+===================
