@@ -27,8 +27,7 @@ Developers
 ==========
 
 * Create a Django Project
-* Create a Django app in the project using the app scaffold 
-* Commit the app to a repository in github
+* git clone git@github.com:charlon/django-supporttools.git supporttools
 * 
 
 Collaborators
