@@ -17,16 +17,6 @@ setup(
         'django-compressor',
         'django-templatetag-handlebars',
         'beautifulsoup',
-        #'RestClients',
-        #'MobileEsp',
-        'AuthZGroup',
-        'Django-UserService',
-    ],
-    dependency_links=[
-        #'svn+https://svn.cac.washington.edu/svn/restclients/trunk#egg=RestClients',
-        #'-e git+https://github.com/abztrakt/django-mobileesp/#egg=MobileEsp',
-        'git+https://github.com/vegitron/authz_group/tarball/master#egg=AuthZGroup',
-        'git+https://github.com/vegitron/django-userservice#egg=Django-UserService',
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
