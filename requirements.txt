@@ -1,9 +1,3 @@
-django
-django-compressor
-django-templatetag-handlebars
-
-beautifulsoup
-
 -e svn+https://svn.cac.washington.edu/svn/restclients/trunk#egg=RestClients
 -e git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp
 -e git+https://github.com/vegitron/authz_group#egg=AuthZGroup
