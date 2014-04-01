@@ -42,3 +42,50 @@ html, body { height: 100%; }
 /*** developer ***/
 
 #developer { position: absolute; top:10px; right: 10px; text-transform: uppercase; }
+
+/*** user service overrides ***/
+
+.user-service { max-width: 330px; padding: 15px; margin: 0 auto;
+    
+    .user-service-heading { margin-bottom: 10px; }
+    .user-service-sub-heading { color: #666; }
+    
+    .checkbox { font-weight: normal; }
+    
+    .form-control { position: relative; font-size: 16px; height: auto; padding: 10px;
+    -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+    }
+    
+    .form-control:focus { z-index: 2; }
+    
+    input[type="text"] { margin-bottom: -1px; }
+    
+    input[type="password"] { margin-bottom: 10px; }
+}
+
+/*** restclients overrides ***/
+
+.restclients-proxy { background: #e5e5e5; margin-bottom: 2em;border-radius: 4px;padding: 5px;}
+.restclients-header { line-height: 30px; margin-bottom:5px;  }
+.restclients-header span.label {  }
+.restclients-header-title { padding-left:20px; font-weight:bold; }
+.restclients-header-url { }
+.restclients-header-url span.glyphicon { font-size: 1.4em; padding: 0 5px; vertical-align: middle; color: #999; }
+.restclients-header-url input { display:inline-block; width: 95%; }
+.restclients-response-content {
+    background: #fff; 
+    padding: 1em; 
+    margin: 0 -5px;
+    min-height: 20px;
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 0px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+.restclients-response-content label { font-weight: normal; }
+.restclients-response-content input[type="submit"] { margin: 1em 0; }
+.restclients-response-content ul, .restclients-response-content ol { padding-left: 20px; margin-top: 1em; }
+.restclients-footer { font-size:.85em; }
