@@ -17,10 +17,6 @@ setup(
         'django-compressor',
         'django-templatetag-handlebars',
         'beautifulsoup',
-        'RestClients',
-        'django_mobileesp',
-        'AuthZGroup',
-        'Django-UserService',
     ],
     dependency_links=[
         'svn+https://svn.cac.washington.edu/svn/restclients/trunk#egg=RestClients',
