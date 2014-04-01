@@ -24,7 +24,7 @@ setup(
     ],
     dependency_links=[
         #'svn+https://svn.cac.washington.edu/svn/restclients/trunk#egg=RestClients',
-        'git+ssh://git@github.com/abztrakt/django-mobileesp.git#egg=django_mobileesp',
+        'git+ssh://git@github.com:abztrakt/django-mobileesp.git#egg=django_mobileesp',
         'git+https://github.com/vegitron/authz_group#egg=AuthZGroup',
         'git+https://github.com/vegitron/django-userservice#egg=Django-UserService',
     ],
