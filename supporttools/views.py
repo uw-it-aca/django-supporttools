@@ -6,4 +6,4 @@ from django.shortcuts import render_to_response
                         
 def home(request):
     params = {}
-    return render_to_response('support-home.html', params, context_instance=RequestContext(request))
+    return render_to_response('supporttools/home.html', params, context_instance=RequestContext(request))
