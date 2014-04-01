@@ -63,24 +63,36 @@
                    <h1>ACA SUPPORT TOOLS</h1>
                 </div>
                 
-                <h3>GLOBAL TOOLS</h3>
-                <ul>
-                    <li><a href="/support">home</a></li>
-                    <li><a href="/support/users">users</a></li>
-                    <li><a href="/support/restclients/view/sws/student/v4/">sws</a></li>
-                    <li><a href="/support/restclients/view/pws/student/v4/">pws</a></li>
-                </ul>
                 
-                <h3>APP TOOLS</h3>
-                <ul>
-                    <li>feature 1</li>
-                    <li>feature 2</li>
-                </ul>
-    
-                <!-- add your site or application content here -->
-                <div id="content">
-                    {% block content %}{% endblock %}
-                </div>            
+                <div class="row">
+                    <div class="col-md-2">
+                        
+                        <h5 style="margin-bottom:1.5em;"><a href="/">APPNAME</a></h5>
+                        
+                        <h5>GLOBAL TOOLS</h5>
+                        <ul>
+                            <li><a href="/support">home</a></li>
+                            <li><a href="/support/users">users</a></li>
+                            <li><a href="/support/restclients/view/sws/student/v4/">sws</a></li>
+                            <li><a href="/support/restclients/view/pws/student/v4/">pws</a></li>
+                        </ul>
+                        
+                        <h5>APP TOOLS</h5>
+                        <ul>
+                            <li>feature 1</li>
+                            <li>feature 2</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-md-10">
+                        
+                        <!-- add your site or application content here -->
+                        <div id="content">
+                            {% block content %}{% endblock %}
+                        </div>  
+                        
+                    </div>
+                </div> 
                 
             </div>
         
