@@ -20,8 +20,8 @@ Pip install the requirements.txt that was included.
     $ cd [virtualenv] /src
     $ pip install -r django-supporttools/requirements.txt
  
-Settings
--------
+Project settings.py
+------------------
 
 **INSTALLED_APPS**
 
@@ -46,7 +46,7 @@ Other settings...
     RESTCLIENTS_ADMIN_GROUP = ' '
     RESTCLIENTS_SWS_DAO_CLASS = 'restclients.dao_implementation.sws.File'
 
-URLS
-----
+Project urls.py
+---------------
 
     url(r'^support/', include('supporttools.urls')),
