@@ -40,8 +40,10 @@ Settings
 
 **Other settings**
     
-    AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'  
-
+    AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'       
+    USERSERVICE_ADMIN_GROUP = ' '
+    RESTCLIENTS_ADMIN_GROUP = ' '
+    RESTCLIENTS_SWS_DAO_CLASS = 'restclients.dao_implementation.sws.File'
 
 URLS
 ----
