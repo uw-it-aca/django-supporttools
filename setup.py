@@ -13,6 +13,7 @@ setup(
     include_package_data=True,
     dependency_links = [
         'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
+        'git+https://github.com/vegitron/authz_group#egg=AuthZGroup',
     ],
     install_requires = [
         'setuptools',
@@ -21,6 +22,7 @@ setup(
         'django-templatetag-handlebars',
         'beautifulsoup',
         'django_mobileesp',
+        'AuthZGroup',
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
