@@ -11,10 +11,6 @@ setup(
     version='0.1',
     packages=['supporttools'],
     include_package_data=True,
-    dependency_links = [
-        'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
-        'git+https://github.com/vegitron/authz_group/archive/master.tar.gz#egg=AuthZGroup',
-    ],
     install_requires = [
         'setuptools',
         'django',
@@ -23,6 +19,11 @@ setup(
         'beautifulsoup',
         'django_mobileesp',
         'AuthZGroup',
+    ],
+    dependency_links = [
+        'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
+        'https://github.com/vegitron/authz_group/archive/masterz#egg=AuthZGroup',
+        #'https://github.com/disqus/django-haystack/tarball/master#egg=django-haystack',
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
