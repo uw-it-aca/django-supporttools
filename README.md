@@ -8,7 +8,7 @@ Installation
 
 **Project directory**
 
-Install Support Tool in your project.
+Install Support Tools in your project.
 
     $ cd [project dir]
     $ pip install -e git+https://github.com/charlon/django-supporttools/#egg=django_supporttools
