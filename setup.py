@@ -19,6 +19,7 @@ setup(
         'beautifulsoup',
         'django_mobileesp',
         'AuthZ-Group',
+        'Django-UserService',
     ],
     dependency_links = [
         #'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
