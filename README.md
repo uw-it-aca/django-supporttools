@@ -25,13 +25,25 @@ Settings
 
 **INSTALLED_APPS**
 
-    'compressor',
     'supporttools',
     'restclients',
     'userservice',
     'authz_group',
-    
 
-**urls.py**
+**MIDDLEWARE_CLASSES**
+
+    'userservice.user.UserServiceMiddleware',
+
+**AUTHENTICATION_BACKENDS**
+
+    'django.contrib.auth.backends.RemoteUserBackend',
+
+**Other settings**
+    
+    AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'  
+
+
+URLS
+----
 
 Handle the "support" URL for you application.
