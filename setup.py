@@ -18,7 +18,7 @@ setup(
         'django-templatetag-handlebars',
         'beautifulsoup',
         'django_mobileesp',
-        'AuthZGroup',
+        'AuthZ-Group',
     ],
     dependency_links = [
         #'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
