@@ -6,16 +6,16 @@ A Django application used for theming and wrapping ACA support tools.
 Installation
 ------------
 
-**In your project directory**
+**Django**
 
-    $ cd [project]
+    $ cd [project dir]
     $ pip install -e git+https://github.com/charlon/django-supporttools/#egg=django_supporttools
 
 **Dependencies**
 
 Turn the cloned repository into a virtualenv.
 
-    $ cd [virtualenve] /src
+    $ cd [virtualenv dir] /src
     $ pip install -r django-supporttools/supporttools/requirements.txt
   
 **settings.py**
