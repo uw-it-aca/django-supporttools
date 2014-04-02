@@ -19,7 +19,10 @@ Pip install the requirements.txt that was included.
 
     $ cd [virtualenv] /src
     $ pip install -r django-supporttools/requirements.txt
-  
+ 
+Project
+-------
+
 **settings.py**
 
 Update your project settings.
