@@ -21,8 +21,8 @@ setup(
         'AuthZGroup',
     ],
     dependency_links = [
-        'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
-        'https://github.com/vegitron/authz_group/archive/master.tar.gz#egg=AuthZGroup',
+        #'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
+        'https://github.com/vegitron/authz_group/archive/master.tar.gz#egg=AuthZ-Group',
         #'https://github.com/disqus/django-haystack/tarball/master#egg=django-haystack',
     ],
     license='Apache License, Version 2.0',  # example license
