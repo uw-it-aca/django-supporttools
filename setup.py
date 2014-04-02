@@ -22,7 +22,7 @@ setup(
         'Django-UserService',
     ],
     dependency_links = [
-        'https://github.com/abztrakt/django-mobileesp/archive/master.tar.gz#egg=Django-Mobileesp',
+        #'https://github.com/abztrakt/django-mobileesp/archive/master.tar.gz#egg=Django-Mobileesp',
         'https://github.com/vegitron/authz_group/archive/master.tar.gz#egg=AuthZ-Group',
         'https://github.com/vegitron/django-userservice/archive/master.tar.gz#egg=Django-UserService'
     ],
