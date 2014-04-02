@@ -17,7 +17,7 @@ setup(
         'django-compressor',
         'django-templatetag-handlebars',
         'beautifulsoup',
-        'Django-Mobileesp',
+        #'Django-Mobileesp',
         'AuthZ-Group',
         'Django-UserService',
     ],
