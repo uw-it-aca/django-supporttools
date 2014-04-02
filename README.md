@@ -48,4 +48,4 @@ Settings
 URLS
 ----
 
-Handle the "support" URL for you application.
+    url(r'^support/', include('supporttools.urls')),
