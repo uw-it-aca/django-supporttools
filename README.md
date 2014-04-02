@@ -18,7 +18,7 @@ Install Support Tool in your project.
 Pip install the requirements.txt that was included.
 
     $ cd [virtualenv dir] /src
-    $ pip install -r django-supporttools/supporttools/requirements.txt
+    $ pip install -r django-supporttools/requirements.txt
   
 **settings.py**
 
