@@ -22,9 +22,9 @@ setup(
         'Django-UserService',
     ],
     dependency_links = [
-        #'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
+        'https://github.com/abztrakt/django-mobileesp/archive/master.tar.gz#egg=django_mobileesp',
         'https://github.com/vegitron/authz_group/archive/master.tar.gz#egg=AuthZ-Group',
-        #'https://github.com/disqus/django-haystack/tarball/master#egg=django-haystack',
+        'https://github.com/vegitron/django-userservice/archive/master.tar.gz#egg=Django-UserService'
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
