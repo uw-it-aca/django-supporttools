@@ -13,7 +13,7 @@ setup(
     include_package_data=True,
     dependency_links = [
         'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
-        'git+https://github.com/vegitron/authz_group#egg=AuthZGroup',
+        'git+https://github.com/vegitron/authz_group.git#egg=AuthZGroup',
     ],
     install_requires = [
         'setuptools',
