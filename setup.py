@@ -12,7 +12,7 @@ setup(
     packages=['supporttools'],
     include_package_data=True,
     dependency_links = [
-        'git+https://github.com/liamzebedee/scandir.git#egg=scandir-0.1',
+        'git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp',
     ],
     install_requires = [
         'setuptools',
@@ -20,6 +20,7 @@ setup(
         'django-compressor',
         'django-templatetag-handlebars',
         'beautifulsoup',
+        'django_mobileesp',
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
