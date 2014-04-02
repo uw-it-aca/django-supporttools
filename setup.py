@@ -11,6 +11,9 @@ setup(
     version='0.1',
     packages=['supporttools'],
     include_package_data=True,
+    dependency_links = [
+        'git+https://github.com/liamzebedee/scandir.git#egg=scandir-0.1',
+    ],
     install_requires = [
         'setuptools',
         'django',
