@@ -38,7 +38,8 @@ Settings
 
     'django.contrib.auth.backends.RemoteUserBackend',
 
-**Other settings**
+
+
     
     AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'       
     USERSERVICE_ADMIN_GROUP = ' '
