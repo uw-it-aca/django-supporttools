@@ -33,6 +33,7 @@ Project settings.py
 **MIDDLEWARE_CLASSES**
 
     'userservice.user.UserServiceMiddleware',
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 
 **AUTHENTICATION_BACKENDS**
 
