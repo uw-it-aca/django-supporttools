@@ -49,32 +49,38 @@
         {% endcompress %}
         {% endif %}
         
-        <script src="{{ STATIC_URL }}supporttools/js/vendor/modernizr-2.6.2.min.js"></script>
-        
     </head>
     <body>
         
         <header class="masthead">
-          <div class="masthead-inner">
-           <h5 style="margin-bottom:1.5em;"><i class="fa fa-arrow-circle-left"></i>  <a href="/">APP NAME</a></h5>
-           
-            <div class="tool-name">SUPPORT TOOLS</div>          
+            <div class="masthead-inner">
             
-            <div style="color:red;"><i class="fa fa-user"></i> netid</div>
-                        
-            <h5><i class="fa fa-cutlery"></i> GLOBAL TOOLS</h5>
-            <ul>
-                <li><a href="/support">home</a></li>
-                <li><a href="/support/users">userservice</a></li>
-                <li><a href="/support/restclients/view/sws/student/v4/">sws browser</a></li>
-                <li><a href="/support/restclients/view/pws/student/v4/">pws browser</a></li>
-            </ul>
-            
-            <h5><i class="fa fa-tachometer"></i> APP TOOLS</h5>
-            <ul>
-                <li>feature 1</li>
-                <li>feature 2</li>
-            </ul>
+                <div class="clearfix tool-app">
+                    <div class="pull-left" style="display:inline-block;"><i class="fa fa-arrow-circle-left"></i>  <a href="/">APP NAME</a></div>
+                    <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i> netid</div>
+                </div>
+                
+                <div class="clearfix tool-name">
+                    <span>SUPPORT TOOLS</span> 
+                    <div class="pull-right" style="display:inline-block;"><a href="#" id="tool_menu_button"><i class="fa fa-bars"></i></a></div>
+                </div>          
+                
+                <div id="tool_menu" class="tool-list hide">
+                                
+                    <h5><i class="fa fa-cutlery"></i> GLOBAL TOOLS</h5>
+                    <ul>
+                        <li><a href="/support">home</a></li>
+                        <li><a href="/support/users">userservice</a></li>
+                        <li><a href="/support/restclients/view/sws/student/v4/">sws browser</a></li>
+                        <li><a href="/support/restclients/view/pws/student/v4/">pws browser</a></li>
+                    </ul>
+                    
+                    <h5><i class="fa fa-tachometer"></i> APP TOOLS</h5>
+                    <ul>
+                        <li>feature 1</li>
+                        <li>feature 2</li>
+                    </ul>
+                </div>
             
             </div>
         </header>
@@ -99,27 +105,25 @@
         <!-- jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}supporttools/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-                
+        
+        <script type="text/javascript">
+            window.support = {
+                is_mobile: {% if request.is_mobile %}true{% else %}false{% endif %},
+                is_tablet: {% if request.is_tablet %}true{% else %}false{% endif %},
+                is_desktop: {% if not request.is_mobile and not request.is_tablet %}true{% else %}false{% endif %}
+            };
+        </script>
+                        
         <!-- javascript -->
         {% compress js %}
             <script src="{{ STATIC_URL }}supporttools/js/vendor/bootstrap-3.0.0.min.js"></script>
             <script src="{{ STATIC_URL }}supporttools/js/vendor/handlebars-1.0.0.min.js"></script>
             
             <script src="{{ STATIC_URL }}supporttools/js/main.js"></script>
-            {% block extra_js %}{% endblock %}
+            
+            
         {% endcompress %}
-        
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-        -->
+
         
     </body>
 </html>
