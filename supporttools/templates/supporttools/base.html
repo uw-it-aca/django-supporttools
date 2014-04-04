@@ -38,6 +38,7 @@
         <!-- mobile first styles -->
         {% compress css %}
             <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/bootstrap-3.0.0.min.css">
+            <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/font-awesome-4.0.3.min.css">
             <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/mobile.less" type="text/less">
         {% endcompress %}
 
@@ -53,62 +54,40 @@
     </head>
     <body>
         
-        <!-- wrap all content here -->
-        <div id="wrap">
-        
-            <!-- begin page content -->
-            <div class="container">
-                
-                <div class="page-header">
-                   <h1>ACA SUPPORT TOOLS</h1>
-                </div>
-                
-                
-                <div class="row">
-                    <div class="col-md-2">
+        <header class="masthead">
+          <div class="masthead-inner">
+           <h5 style="margin-bottom:1.5em;"><i class="fa fa-arrow-circle-left"></i>  <a href="/">APP NAME</a></h5>
+           
+            <div class="tool-name">SUPPORT TOOLS</div>          
+            
+            <div style="color:red;"><i class="fa fa-user"></i> netid</div>
                         
-                        <h5 style="margin-bottom:1.5em;"><a href="/">APPNAME</a></h5>
-                        
-                        <h5>GLOBAL TOOLS</h5>
-                        <ul>
-                            <li><a href="/support">home</a></li>
-                            <li><a href="/support/users">users</a></li>
-                            <li><a href="/support/restclients/view/sws/student/v4/">sws</a></li>
-                            <li><a href="/support/restclients/view/pws/student/v4/">pws</a></li>
-                        </ul>
-                        
-                        <h5>APP TOOLS</h5>
-                        <ul>
-                            <li>feature 1</li>
-                            <li>feature 2</li>
-                        </ul>
-                        
-                    </div>
-                    <div class="col-md-10">
-                        
-                        <!-- add your site or application content here -->
-                        <div id="content">
-                            {% block content %}{% endblock %}
-                        </div>  
-                        
-                    </div>
-                </div> 
-                
+            <h5><i class="fa fa-cutlery"></i> GLOBAL TOOLS</h5>
+            <ul>
+                <li><a href="/support">home</a></li>
+                <li><a href="/support/users">userservice</a></li>
+                <li><a href="/support/restclients/view/sws/student/v4/">sws browser</a></li>
+                <li><a href="/support/restclients/view/pws/student/v4/">pws browser</a></li>
+            </ul>
+            
+            <h5><i class="fa fa-tachometer"></i> APP TOOLS</h5>
+            <ul>
+                <li>feature 1</li>
+                <li>feature 2</li>
+            </ul>
+            
             </div>
-        
-        
-        </div><!-- /wrap -->
+        </header>
 
-        <!-- footer -->
-        <div role="complimentary" id="footer">
-            <div class="container">
-                <!-- example of is_desktop usage in templates -->
-                {% if request.is_mobile %}
-                <p class="credit">&copy; 1998-2014, UW-IT, ACA&nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy" title="UW Privacy Policy">Privacy</a> | <a href="http://www.washington.edu/online/terms" title="UW Terms of Service">Terms</a></p>
-                {% else %}
-                <p class="credit">&copy; 1998-2014, UW Information Technology, Academic &amp; Collaborative Applications&nbsp;&nbsp;&nbsp;<a href="http://www.washington.edu/online/privacy" title="UW Privacy Policy">Privacy</a> | <a href="http://www.washington.edu/online/terms" title="UW Terms of Service">Terms</a></p>
-                {% endif %}
-            </div>
+        <div class="content">
+
+            
+            <!-- add your site or application content here -->
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div> 
+                        
+    
         </div>
 
         
