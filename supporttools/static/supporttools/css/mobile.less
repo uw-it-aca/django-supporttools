@@ -26,13 +26,31 @@ body {
     background: #E5DDCB;
 
 
-    .masthead-inner {        
+    .masthead-inner { 
         .tool-app { margin: 0; padding: 15px; }
         .tool-name { text-transform: uppercase; font-size: 1.5em; font-weight: bold; padding: 0 15px 15px; }
-        .tool-list { background:#ccc; padding:15px; }
+        .tool-list { background:#ccc;
+            
+            -moz-transition: .5s;
+            -ms-transition: .5s;
+            -o-transition: .5s;
+            -webkit-transition: .5s;
+            transition: .5s;
+    
+            &.show-div { 
+                padding: 15px;
+            }
+            
+            &.hide-div {
+                
+                padding: 0 15px;
+            }
+        }
+         
          
         ul { margin-bottom: 1.5em; }
     }
+    
 }
 
 .content { padding: 15px; }
@@ -68,19 +86,11 @@ body {
 }***/
 
 /*** show/hide animation **********/
-.hide {
+.hide-div {
     overflow: hidden;
     max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-
 }
-.show {
-    
-
-
+.show-div {
     max-height: 1000px;
     overflow: hidden;
 }
