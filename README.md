@@ -60,5 +60,6 @@ Other settings...
 
 Project urls.py
 ---------------
-
+    # support urls
+    url(r'^support/someadminapp/', include('someadminapp.urls')),
     url(r'^support/', include('supporttools.urls')),
