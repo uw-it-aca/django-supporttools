@@ -25,10 +25,14 @@ Project settings.py
 
 **INSTALLED_APPS**
 
+    # global support tools/apps
     'supporttools',
     'restclients',
     'userservice',
     'authz_group',
+    
+    # project specific tools/apps
+    'someadminapp'
 
 **MIDDLEWARE_CLASSES**
 
