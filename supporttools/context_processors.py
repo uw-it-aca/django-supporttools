@@ -21,6 +21,8 @@ def global_supportools_stuff(request):
         'supporttools_parent_app' : settings.SUPPORTTOOLS_PARENT_APP,
         "supporttools_netid": user.uwnetid,
     }
+    
+    print "global_supporttools processor just ran!"
 
     return (params)
     
