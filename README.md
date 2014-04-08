@@ -25,10 +25,14 @@ Project settings.py
 
 **INSTALLED_APPS**
 
+    # global support tools/apps
     'supporttools',
     'restclients',
     'userservice',
     'authz_group',
+    
+    # project specific tools/apps
+    'someadminapp'
 
 **MIDDLEWARE_CLASSES**
 
@@ -39,7 +43,14 @@ Project settings.py
 
     'django.contrib.auth.backends.RemoteUserBackend',
 
+**TEMPLATE_CONTEXT_PROCESSORS**
 
+    'supporttools.context_processors.global_supportools_stuff',
+
+Support Tools settings...
+
+    SUPPORTTOOLS_PARENT_APP = "TestApp"
+    
 Other settings...
     
     AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'       
@@ -49,5 +60,6 @@ Other settings...
 
 Project urls.py
 ---------------
-
+    # support urls
+    url(r'^support/someadminapp/', include('someadminapp.urls')),
     url(r'^support/', include('supporttools.urls')),
