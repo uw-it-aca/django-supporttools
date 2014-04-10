@@ -11,7 +11,7 @@ from django.conf import settings
 from restclients.pws import PWS
 from userservice.user import UserService
 
-def global_supportools_stuff(request):
+def supportools_globals(request):
     
     # WARNING... THIS IS NOT PRODUCTION CODE!
     user_service = UserService()
@@ -22,8 +22,6 @@ def global_supportools_stuff(request):
         'supporttools_user': user.uwnetid,
     }
     
-    print "global_supporttools processor just ran!"
-
     return (params)
     
     
