@@ -61,6 +61,10 @@ Project settings.py
     'django.core.context_processors.request',
     'supporttools.context_processors.supportools_globals',
 
+**TEMPLATE_DIRS**
+
+    'os.path.join(BASE_DIR, 'supporttools', 'templates'),'
+
 Support Tools settings...
 
     SUPPORTTOOLS_PARENT_APP = "TestApp"
