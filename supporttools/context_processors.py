@@ -19,7 +19,8 @@ def global_supportools_stuff(request):
     
     params = {
         'supporttools_parent_app' : settings.SUPPORTTOOLS_PARENT_APP,
-        "supporttools_netid": user.uwnetid,
+        'supporttools_user': user_service.get_original_user(),
+        'supporttools_override_user': user_service.get_override_user(),
     }
     
     print "global_supporttools processor just ran!"
