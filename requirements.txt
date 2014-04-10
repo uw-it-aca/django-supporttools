@@ -2,3 +2,5 @@
 -e git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp
 -e git+https://github.com/vegitron/authz_group#egg=AuthZGroup
 -e git+https://github.com/vegitron/django-userservice#egg=Django-UserService
+-e git+https://github.com/vegitron/status-app#egg=status-app
+

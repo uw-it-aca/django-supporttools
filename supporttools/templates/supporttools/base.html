@@ -10,6 +10,9 @@
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
         <meta http-equiv="cleartype" content="on">
         
+        {% load staticfiles %}
+        {% load compress %}
+        
         <!-- favicon and mobile device icons-->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-144x144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-114x114-precomposed.png">
@@ -33,19 +36,17 @@
         <!--<link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/normalize-2.1.3.css">-->
         <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/bootstrap-3.0.0.min.css">
        
-        {% load compress %}
-
         <!-- mobile first styles -->
         {% compress css %}
-            <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/bootstrap-3.0.0.min.css">
-            <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/font-awesome-4.0.3.min.css">
-            <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/mobile.less" type="text/less">
+            <link rel="stylesheet" href="{% static "supporttools/css/vendor/bootstrap-3.0.0.min.css" %}">
+            <link rel="stylesheet" href="{% static "supporttools/css/vendor/font-awesome-4.0.3.min.css" %}">
+            <link rel="stylesheet" href="{% static "supporttools/css/mobile.less" %}" type="text/less">
         {% endcompress %}
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
         {% compress css %}
-            <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/desktop.less" type="text/less">
+            <link rel="stylesheet" href="{% static "supporttools/css/desktop.less" %}" type="text/less">
         {% endcompress %}
         {% endif %}
         
@@ -71,6 +72,7 @@
                         <h5><i class="fa fa-cutlery"></i> GLOBAL TOOLS</h5>
                         <ul>
                             <li><a href="/support">home</a></li>
+                            <li><a href="/support/status">status</a></li>
                             <li><a href="/support/users">userservice</a></li>
                             <li><a href="/support/restclients/view/sws/student/v4/">sws browser</a></li>
                             <li><a href="/support/restclients/view/pws/student/v4/">pws browser</a></li>
@@ -115,14 +117,13 @@
                         
         <!-- javascript -->
         {% compress js %}
-            <script src="{{ STATIC_URL }}supporttools/js/vendor/bootstrap-3.0.0.min.js"></script>
-            <script src="{{ STATIC_URL }}supporttools/js/vendor/handlebars-1.0.0.min.js"></script>
+            <script src="{% static "supporttools/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
+            <script src="{% static "supporttools/js/vendor/handlebars-1.0.0.min.js" %}"></script>
+            <script src="{% static "supporttools/js/main.js" %}"></script>
             
-            <script src="{{ STATIC_URL }}supporttools/js/main.js"></script>
-            
-            
+            {% block javascript %}{% endblock %}
+        
         {% endcompress %}
-
         
     </body>
 </html>
