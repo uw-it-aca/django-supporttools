@@ -15,12 +15,11 @@ def global_supportools_stuff(request):
     
     # WARNING... THIS IS NOT PRODUCTION CODE!
     user_service = UserService()
-    user = PWS().get_person_by_netid(user_service.get_user())
+    user = PWS().get_person_by_netid(user_service.get_original_user())
     
     params = {
         'supporttools_parent_app' : settings.SUPPORTTOOLS_PARENT_APP,
-        'supporttools_user': user_service.get_original_user(),
-        'supporttools_override_user': user_service.get_override_user(),
+        'supporttools_user': user.uwnetid,
     }
     
     print "global_supporttools processor just ran!"

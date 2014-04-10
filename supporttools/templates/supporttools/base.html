@@ -54,26 +54,12 @@
         
         <header class="masthead">
             <div class="masthead-inner">
-                
-                 {% if override_user %}
-                <div class="clearfix" style="background:red;">
-                    <form method="POST" action="/support/users">
-                    <div class="container">Overriding as <strong>{{supporttools_override_user}}</strong>
-                        {% csrf_token %}
-                        <input type="hidden" value="1" name="clear_override">
-                        <button class="btn btn-danger btn-xs pull-right" value="Clear override" type="submit"><i class="fa fa-times-circle"></i> Clear</button>
-                    </div>
-                    </form>
-                </div>
-                {% endif %}
-                
+                    
                 <div class="clearfix tool-app">
                     <div class="pull-left" style="display:inline-block;"><i class="fa fa-arrow-circle-left"></i>  <a href="/">{{ supporttools_parent_app }}</a></div>
                     <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i> {{supporttools_user}}</div>
                 </div>
-                
-                
-                
+                                
                 <div class="clearfix tool-name">
                     <span>SUPPORT TOOLS</span> 
                     <div class="pull-right" style="display:inline-block;"><a href="#" id="tool_menu_button"><i class="fa fa-bars"></i></a></div>
