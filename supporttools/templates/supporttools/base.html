@@ -119,10 +119,8 @@
         {% compress js %}
             <script src="{% static "supporttools/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
             <script src="{% static "supporttools/js/vendor/handlebars-1.0.0.min.js" %}"></script>
+            <script src="{% static "supporttools/js/vendor/chart.min.js" %}"></script>
             <script src="{% static "supporttools/js/main.js" %}"></script>
-            
-            {% block javascript %}{% endblock %}
-        
         {% endcompress %}
         
     </body>
