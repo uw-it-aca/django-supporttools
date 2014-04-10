@@ -50,6 +50,9 @@
         {% endcompress %}
         {% endif %}
         
+        <!-- chart.js required in head to work -->
+        <script src="{% static "supporttools/js/vendor/chart.min.js" %}"></script>
+        
     </head>
     <body>
         
@@ -119,7 +122,6 @@
         {% compress js %}
             <script src="{% static "supporttools/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
             <script src="{% static "supporttools/js/vendor/handlebars-1.0.0.min.js" %}"></script>
-            <script src="{% static "supporttools/js/vendor/chart.min.js" %}"></script>
             <script src="{% static "supporttools/js/main.js" %}"></script>
         {% endcompress %}
         
