@@ -35,17 +35,31 @@ Project settings.py
     'someadminapp'
 
 **MIDDLEWARE_CLASSES**
-
-    'userservice.user.UserServiceMiddleware',
+    
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+    'userservice.user.UserServiceMiddleware',
 
 **AUTHENTICATION_BACKENDS**
 
     'django.contrib.auth.backends.RemoteUserBackend',
 
 **TEMPLATE_CONTEXT_PROCESSORS**
-
-    'supporttools.context_processors.global_supportools_stuff',
+    
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
+    'supporttools.context_processors.supportools_globals',
 
 Support Tools settings...
 
