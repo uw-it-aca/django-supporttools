@@ -19,7 +19,8 @@ def supportools_globals(request):
     
     params = {
         'supporttools_parent_app' : settings.SUPPORTTOOLS_PARENT_APP,
-        'supporttools_user': user.uwnetid,
+        'supporttools_user' : user.uwnetid,
+        'supporttools_is_overrideable' : settings.SUPPORTTOOLS_IS_OVERRIDEABLE,
     }
     
     return (params)
