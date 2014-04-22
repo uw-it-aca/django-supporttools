@@ -68,6 +68,7 @@ Project settings.py
 Support Tools settings...
 
     SUPPORTTOOLS_PARENT_APP = "TestApp"
+    SUPPORTTOOLS_IS_OVERRIDEABLE = False
     
 Other settings...
     
