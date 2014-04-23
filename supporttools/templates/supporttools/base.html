@@ -14,14 +14,14 @@
         {% load compress %}
         
         <!-- favicon and mobile device icons-->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-144x144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-114x114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-72x72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-57x57-precomposed.png"> 
-        <link rel="shortcut icon" href="{{ STATIC_URL }}supporttools/ico/favicon.ico" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "supporttools/ico/apple-touch-icon-144x144-precomposed.png" %}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "supporttools/ico/apple-touch-icon-114x114-precomposed.png" %}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "supporttools/ico/apple-touch-icon-72x72-precomposed.png" %}">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static "supporttools/ico/apple-touch-icon-57x57-precomposed.png" %}">
+        <link rel="shortcut icon" href="{% static "supporttools/ico/favicon.ico" %}">
         
         <!-- windows8 - tile icon  & color -->
-        <meta name="msapplication-TileImage" content="{{ STATIC_URL }}supporttools/ico/apple-touch-icon-144x144-precomposed.png">
+        <meta name="msapplication-TileImage" content="{% static "supporttools/ico/apple-touch-icon-144x144-precomposed.png" %}">
         <meta name="msapplication-TileColor" content="#222222">
         
         <!-- ios webapps - delete if not needed -->
@@ -33,8 +33,8 @@
         -->
         
         <!-- normalize/bootstrap -depending on what you want to start with -->
-        <!--<link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/normalize-2.1.3.css">-->
-        <link rel="stylesheet" href="{{ STATIC_URL }}supporttools/css/vendor/bootstrap-3.0.0.min.css">
+        <!--<link rel="stylesheet" href="{% static "supporttools/css/vendor/normalize-2.1.3.css">-->
+        <link rel="stylesheet" href="{% static "supporttools/css/vendor/bootstrap-3.0.0.min.css">
        
         <!-- mobile first styles -->
         {% compress css %}
