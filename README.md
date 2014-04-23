@@ -90,5 +90,8 @@ Other settings...
 Project urls.py
 ---------------
     # support urls
-    url(r'^support/someadminapp/', include('someadminapp.urls')),
+    url(r'^someadminapp/', include('someadminapp.urls')),
     url(r'^support/', include('supporttools.urls')),
+    url(r'^users/', include('userservice.urls')),
+    url(r'^restclients/', include('restclients.urls')),
+    url(r'^status/', include('status_app.urls')),
