@@ -70,6 +70,15 @@ Support Tools settings...
 
     SUPPORTTOOLS_PARENT_APP = "TestApp"
     SUPPORTTOOLS_IS_OVERRIDEABLE = False
+
+Status App settings...
+
+    STATUS_APP_DISPATCHERS = ['status_app.dispatcher.memory.dispatch']
+
+    STATUS_APP_RECEIVERS = [
+        'restclients.signals.rest_request.rest_request_receiver',
+        'restclients.signals.success.rest_request_passfail_receiver'
+    ]
     
 Other settings...
     
