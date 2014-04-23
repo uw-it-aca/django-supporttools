@@ -30,6 +30,7 @@ Project settings.py
     'restclients',
     'userservice',
     'authz_group',
+    'status_app',
     
     # project specific tools/apps
     'someadminapp'
