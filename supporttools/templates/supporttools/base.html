@@ -39,13 +39,13 @@
         {% compress css %}
             <link rel="stylesheet" href="{% static "supporttools/css/vendor/bootstrap-3.0.0.min.css" %}">
             <link rel="stylesheet" href="{% static "supporttools/css/vendor/font-awesome-4.0.3.min.css" %}">
-            <link rel="stylesheet{% if not has_less_compiled %}/less{% endif %}" type="text/less" href="{% static "supporttools/css/mobile.less" %}">
+            <link rel="stylesheet" type="text/less" href="{% static "supporttools/css/mobile.less" %}">
         {% endcompress %}
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
         {% compress css %}
-            <link rel="stylesheet{% if not has_less_compiled %}/less{% endif %}" type="text/less" href="{% static "supporttools/css/desktop.less" %}">
+            <link rel="stylesheet" type="text/less" href="{% static "supporttools/css/desktop.less" %}">
         {% endcompress %}
         {% endif %}
         
