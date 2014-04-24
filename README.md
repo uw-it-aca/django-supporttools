@@ -60,7 +60,9 @@ Project settings.py
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    
     'supporttools.context_processors.supportools_globals',
+    'supporttools.context_processors.has_less_compiled',
 
 **TEMPLATE_DIRS**
 
