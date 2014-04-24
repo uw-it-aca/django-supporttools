@@ -34,24 +34,27 @@
         
         <!-- normalize/bootstrap -depending on what you want to start with -->
         <!--<link rel="stylesheet" href="{% static "supporttools/css/vendor/normalize-2.1.3.css">-->
-        <link rel="stylesheet" href="{% static "supporttools/css/vendor/bootstrap-3.0.0.min.css">
-       
+        
         <!-- mobile first styles -->
         {% compress css %}
             <link rel="stylesheet" href="{% static "supporttools/css/vendor/bootstrap-3.0.0.min.css" %}">
             <link rel="stylesheet" href="{% static "supporttools/css/vendor/font-awesome-4.0.3.min.css" %}">
-            <link rel="stylesheet" href="{% static "supporttools/css/mobile.less" %}" type="text/less">
+            <link rel="stylesheet{% if not has_less_compiled %}/less{% endif %}" type="text/less" href="{% static "supporttools/css/mobile.less" %}">
         {% endcompress %}
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
         {% compress css %}
-            <link rel="stylesheet" href="{% static "supporttools/css/desktop.less" %}" type="text/less">
+            <link rel="stylesheet{% if not has_less_compiled %}/less{% endif %}" type="text/less" href="{% static "supporttools/css/desktop.less" %}">
         {% endcompress %}
         {% endif %}
         
         <!-- chart.js required in head to work -->
         <script src="{% static "supporttools/js/vendor/chart.min.js" %}"></script>
+        
+        {% if not has_less_compiled %}
+        <script src="{% static "supporttools/js/vendor/less-1.7.0.min.js" %}"></script>
+        {% endif %}
         
     </head>
     <body>
@@ -112,7 +115,7 @@
         
         <!-- jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}supporttools/js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="{% static "supporttools/js/vendor/jquery-1.10.2.min.js" %}"><\/script>')</script>
         
         <script type="text/javascript">
             window.support = {
@@ -125,7 +128,7 @@
         <!-- javascript -->
         {% compress js %}
             <script src="{% static "supporttools/js/vendor/bootstrap-3.0.0.min.js" %}"></script>
-            <script src="{% static "supporttools/js/vendor/handlebars-1.0.0.min.js" %}"></script>
+            <script src="{% static "supporttools/js/vendor/handlebars-1.0.0.min.js" %}"></script>            
             <script src="{% static "supporttools/js/main.js" %}"></script>
         {% endcompress %}
         
