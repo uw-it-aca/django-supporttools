@@ -75,7 +75,7 @@
                 <div id="tool_menu" class="tool-list hide-div">
 
                     <div class="tool-list-inner">
-                        <h5><i class="fa fa-cutlery"></i> GLOBAL TOOLS</h5>
+                        <h5><i class="fa fa-cutlery"></i> General Tools</h5>
                         <ul>
                             {% url 'supporttools.views.home' as home_url %}
                             {% if home_url %}
@@ -98,12 +98,14 @@
                             <li><a href="{{ pws_url }}">{{ restclients_pws_link|default:"Browse Person Web Service" }}</a></li>
                             {% endif %} 
                         </ul>
-
-                        <h5><i class="fa fa-tachometer"></i> APP TOOLS</h5>
-                        <ul><!--
-                            <li><a href="/testadmin/">TestAdmin 1</a></li>
-                            <li><a href="/testadmin/">TestAdmin 2</a></li>
-                        --></ul>
+                        {% if app_support_views %}
+                        <h5><i class="fa fa-tachometer"></i> {{ supporttools_parent_app|default:"Application" }} Tools</h5>
+                        <ul>
+                            {% for name,view in app_support_views.items %}
+                            <li><a href="{% url view %}">{{ name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
 
                 </div>
