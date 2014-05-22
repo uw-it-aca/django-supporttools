@@ -98,10 +98,10 @@
                             <li><a href="{{ pws_url }}">{{ restclients_pws_link|default:"Browse Person Web Service" }}</a></li>
                             {% endif %} 
                         </ul>
-                        {% if app_support_views %}
+                        {% if supporttools_extra_views %}
                         <h5><i class="fa fa-tachometer"></i> {{ supporttools_parent_app|default:"Application" }} Tools</h5>
                         <ul>
-                            {% for name,view in app_support_views.items %}
+                            {% for name,view in supporttools_extra_views.items %}
                             <li><a href="{% url view %}">{{ name }}</a></li>
                             {% endfor %}
                         </ul>
