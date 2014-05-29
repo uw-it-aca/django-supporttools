@@ -1,6 +1,6 @@
 /*** breakpoints ***/
 
-@desktop: ~"screen and (min-width: 768px)";
+@desktop: ~"screen and (min-width: 1000px)";
 
 /*** less variables ***/
 
@@ -18,7 +18,8 @@
     bottom: 0;
     left: 0;
     z-index: 5;
-    width: 320px;
+    width: 280px;
+    max-width: 280px;
     background-attachment: fixed;
     height: auto;
     
@@ -37,6 +38,8 @@
             .tool-list-inner { }
         }
     }
+    
+
 
 }
 
@@ -44,7 +47,7 @@
      
     
     margin-right: auto;
-    margin-left: 320px;
+    margin-left: 280px;
 
     .navbar { margin: 1em 0; }
 }
