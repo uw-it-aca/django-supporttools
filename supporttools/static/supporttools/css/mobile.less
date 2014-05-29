@@ -2,7 +2,6 @@
 
 @tablet: ~"screen and (min-width: 768px)";
 
-
 /*** less variables ***/
 
 @primary: #2c3e50; /* dark navy */
@@ -21,13 +20,13 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-.masthead {
+.header {
     color: #222;
     /*text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);*/
     background: @sidebar;
 
 
-    .masthead-inner { 
+    .header-inner { 
         .tool-app { margin: 0; padding: 0 15px; line-height: 30px; }
         
         
@@ -50,7 +49,7 @@ body {
             .tool-list-inner { padding: 15px; 
                 
                 /** tool menu list **/
-                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; text-transform: uppercase; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 200; font-size: 1.5em; letter-spacing: 1px; 
+                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; text-transform: uppercase; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 200; font-size: 1.4em; letter-spacing: 1px; 
                     
                     li { line-height: 35px; 
                         
@@ -65,14 +64,23 @@ body {
     
 }
 
-.content { padding-top: 15px; }
+.content { 
+    .container { padding: 0 15px; }
+}
+
+
+
+.footer { padding: 0 15px; color: @secondary; font-size: .85em; color: darken(@sidebar, 30%); }
 
 .stuck { position: fixed; top: 0; left: 0; right: 0; z-index: 999; }
 
-
 /** headers **/
 
-h5 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.25em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; }
+h2 { margin:0 0 1.5em; line-height:60px; text-transform: uppercase; color: @secondary; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 300; font-size: 2em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); }
+
+h3 { line-height:40px; text-transform: uppercase; color: lighten(@secondary, 10%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 300; font-size: 1.75em; letter-spacing: 1px; }
+
+h5 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.15em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; }
 
 
 /*** developer ***/
@@ -95,7 +103,7 @@ h5 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yano
 max-width: 330px;
 padding: 15px;
 margin: 0 auto;
-background: #e5e5e5;
+background: lighten(@sidebar, 3%);
 border-radius:4px;
 }
 .user-service .user-service-heading {
