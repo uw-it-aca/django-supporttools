@@ -18,10 +18,12 @@
     bottom: 0;
     left: 0;
     z-index: 5;
-    width: 280px;
-    max-width: 280px;
     background-attachment: fixed;
     height: auto;
+    width: 260px; max-width: 260px;
+    
+    /* inline media query for desktop */
+    @media @desktop { width: 280px; max-width: 280px; }
     
     .header-inner {
     
@@ -38,17 +40,18 @@
             .tool-list-inner { }
         }
     }
-    
-
 
 }
 
 .content {
-     
-    
-    margin-right: auto;
-    margin-left: 280px;
 
+    margin-right: auto;
+    margin-left: 260px;
+    
+    @media @desktop { 
+        margin-left: 280px;
+    }
+    
     .navbar { margin: 1em 0; }
 }
 
