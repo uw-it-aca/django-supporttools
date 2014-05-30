@@ -6,12 +6,6 @@
 
 
 
-/*** global ***/
-
-
-/*** content ***/
-
-
 .header {
     position: fixed;
     top: 0;
@@ -45,6 +39,7 @@
 
 .content {
     
+    .content-inner { padding: 0 25px; }
     .container { }
     
     margin-right: auto;
@@ -58,9 +53,10 @@
 }
 
 
-/* stuck */
+.footer { position: fixed; left: 0; bottom: 0; z-index: 100; margin-bottom: 0; 
+    .footer-tagline { font-size: .85em; }
+}
 
-.stuck { position: fixed; top:0; right: 10%; left: 30%; z-index: 999; margin: 0 !important; }
 
 .user-service { 
     
@@ -72,4 +68,3 @@
     width: 300px;
 }
 
-.footer { position: absolute; left: 0; bottom: 10px; z-index: 100; }
