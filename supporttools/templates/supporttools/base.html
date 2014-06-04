@@ -66,14 +66,13 @@
             <div class="header-inner">
                 
                 <div class="clearfix tool-header">
-                    <h1 class="pull-left tool-name">{{ supporttools_parent_app}} <span class="tool-support">Support</span></h1>
+                    <h1 class="pull-left tool-name"><a href="/">{{ supporttools_parent_app|default:"Back" }}</a> <span class="tool-support">Support</span></h1>
                     <div class="pull-right tool-menu" style="display:inline-block;"><a href="#" id="tool_menu_button"><i class="fa fa-bars"></i></a></div>
                 </div>
 
                 <div id="tool_menu" class="tool-list hide-div">
                     
                     <div class="clearfix tool-app">
-                    <div class="pull-left" style="display:inline-block;"><i class="fa fa-arrow-circle-left"></i>  <a href="/">{{ supporttools_parent_app|default:"Back" }}</a></div>
                     <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i> {{supporttools_user}}</div>
                 </div>
                     
