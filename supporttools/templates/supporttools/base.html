@@ -153,6 +153,6 @@
             <script src="{% static "vendor/js/handlebars-1.0.0.min.js" %}"></script>
             <script src="{% static "supporttools/js/main.js" %}"></script>
         {% endcompress %}
-
+        {% block extra_js %}{% endblock %}
     </body>
 </html>
