@@ -7,6 +7,8 @@ def supportools_globals(request):
         "supporttools_user": UserService().get_original_user(),
         "supporttools_parent_app": getattr(settings,
                                            "SUPPORTTOOLS_PARENT_APP", ""),
+        "supporttools_parent_app_url": getattr(settings,
+                                           "SUPPORTTOOLS_PARENT_APP_URL", "/"),
         "supporttools_extra_views": getattr(settings,
                                             "SUPPORTTOOLS_EXTRA_VIEWS", {}),
     }
