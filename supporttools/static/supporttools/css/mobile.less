@@ -21,7 +21,7 @@ body {
     color: #222;
     /*text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);*/
     background: @sidebar;
-
+    margin-bottom: 15px;
 
     .header-inner { padding: 0 15px;
 
@@ -50,7 +50,7 @@ body {
             -webkit-transition: .5s;
             transition: .5s;
     
-            .tool-list-inner { margin-top: 2em;
+            .tool-list-inner { margin: 2em 0;
                 
                 h3 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.15em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; margin: 0; }
                 
@@ -95,9 +95,7 @@ body {
    
 }
 
-
-
-.footer { padding: 0 15px; margin-bottom: 10px; display: block; height: 50px;   
+.footer { padding: 0 15px; margin: 2em 0 10px 0; display: block; height: 50px;   
 
     .footer-tagline { color: @secondary; font-size: .75em; color: darken(@sidebar, 30%); }
 }
@@ -106,6 +104,10 @@ body {
 /*** bootstrap overrides **/
 
 .well { box-shadow: none; border: none; background: @sidebar; }
+
+.form-group {
+    .form-control { display: inline-block; width: 82%; }
+}
 
 /*** developer ***/
 
