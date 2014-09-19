@@ -68,6 +68,15 @@ Project settings.py
 
     'os.path.join(BASE_DIR, 'supporttools', 'templates'),'
 
+Mobile ESP settings...
+
+    from django_mobileesp.detector import agent
+
+    DETECT_USER_AGENTS = {
+    'is_tablet' : agent.detectTierTablet,
+    'is_mobile': agent.detectMobileQuick,
+    }
+
 Support Tools settings...
 
     SUPPORTTOOLS_PARENT_APP = "TestApp"
