@@ -4,6 +4,11 @@
 
 /*** less variables ***/
 
+@primary: #2c3e50; /* dark navy */
+@secondary: #34495e; /* lighter navy */
+@sidebar: #ecf0f1; /* gray */
+
+
 .header {
     position: fixed;
     top: 0;
@@ -39,7 +44,11 @@
             -webkit-transition: 0;
             transition: 0;
             
-            .tool-list-inner { }
+            .tool-list-inner { 
+                margin: 0;
+                margin-top: 20px;
+                overflow-y: scroll;
+            }
         }
     }
 
@@ -61,7 +70,12 @@
 }
 
 
-.footer { position: fixed; left: 0; bottom: 0; z-index: 100; margin: 0; 
+.footer { position: fixed; left: 0; bottom: 0; z-index: 100; margin: 0; background:  darken(@sidebar, 5%); width: 260px; padding-top: 10px;
+    
+    @media @desktop { 
+        width: 280px; 
+    }
+    
     .footer-tagline { font-size: .85em; }
 }
 
