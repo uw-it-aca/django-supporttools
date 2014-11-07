@@ -21,8 +21,11 @@ $(function() {
 
 $(window).resize(function() {
     
-    // get correct height for sidebar
-    calculate_sidebar_height();
+    if (!window.support.is_mobile && !window.support.is_tablet) {
+        // get correct height for sidebar
+        calculate_sidebar_height();
+    }
+        
 });
 
 
