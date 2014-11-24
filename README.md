@@ -1,3 +1,6 @@
+[![Build Status](https://api.travis-ci.org/uw-it-aca/django-supporttools.svg?branch=master)](https://travis-ci.org/uw-it-aca/django-supporttools)
+[![Coverage Status](https://coveralls.io/repos/uw-it-aca/django-supporttools/badge.png?branch=master)](https://coveralls.io/r/uw-it-aca/django-supporttools?branch=master)
+
 ACA Support Tools
 =================
 
