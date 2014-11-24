@@ -11,7 +11,7 @@ Installation
 Install Support Tools in your project.
 
     $ cd [project]
-    $ pip install -e git+https://github.com/charlon/django-supporttools/#egg=django_supporttools
+    $ pip install -e git+https://github.com/uw-it-aca/django-supporttools/#egg=django_supporttools
 
 **Install dependencies**
 
