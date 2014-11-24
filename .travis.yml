@@ -10,7 +10,7 @@ before_script:
   - cp travis-ci/manage.py manage.py
   - python manage.py syncdb --noinput
 script:
-  - pep8 --exclude=migrations
+  - pep8 --exclude=migrations supporttools
   - coverage run --source=supporttools manage.py test supporttools
 after_script:
   - coveralls
