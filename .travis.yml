@@ -11,7 +11,7 @@ before_script:
   - python manage.py syncdb --noinput
 script:
   - pep8 --exclude=migrations
-  - coverage run --source=restclients manage.py test supporttools
+  - coverage run --source=supporttools manage.py test supporttools
 after_script:
   - coveralls
 notifications:
