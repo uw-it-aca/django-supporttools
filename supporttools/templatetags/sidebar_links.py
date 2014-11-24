@@ -3,6 +3,7 @@ from django.template.loader_tags import ConstantIncludeNode
 
 register = template.Library()
 
+
 @register.tag("sidebar_links")
 def do_sidebar_links(parser, token):
     # XXX - should this come from/be overrideable by settings?
@@ -13,4 +14,3 @@ def do_sidebar_links(parser, token):
         return ConstantIncludeNode(custom_template)
     except template.TemplateDoesNotExist:
         return ConstantIncludeNode(default_template)
-
