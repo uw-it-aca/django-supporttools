@@ -12,7 +12,7 @@
     {% if status_url %}
     <li><a href="{{ status_url }}">{{ supporttools_parent_app|default:"" }} {{ status_app_link|default:"Status" }}</a></li>
     {% endif %}
-    {% url 'restclients.views.proxy' 'sws' 'student/v4' as sws_url %}
+    {% url 'restclients.views.proxy' 'sws' 'student/v5' as sws_url %}
     {% if sws_url %}
     <li><a href="{{ sws_url }}">{{ restclients_sws_link|default:"Browse Student Web Service" }}</a></li>
     {% endif %}
