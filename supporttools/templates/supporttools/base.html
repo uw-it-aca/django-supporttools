@@ -40,11 +40,16 @@
                 
         <!-- google fonts --> 
         <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700,200' rel='stylesheet' type='text/css'>
-        
+
+        <!-- datatables -->
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css" />
+
         <!-- mobile first styles -->
         {% compress css %}
             <link rel="stylesheet" href="{% static 'vendor/css/bootstrap-3.3.1.min.css' %}">
             <link rel="stylesheet" href="{% static 'vendor/css/font-awesome-4.2.0.min.css' %}">
+            <link rel="stylesheet" href="{% static 'vendor/css/jquery-jsonview-1.2.1.css' %}">
             <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/mobile.less' %}">
         {% endcompress %}
 
@@ -92,13 +97,26 @@
             </div>
         </div>
 
+        <div role="tabpanel" id="restclient-tabs" style="display: none;">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#digested_json" aria-controls="digested_json" role="tab" data-toggle="tab">Digested JSON</a></li>
+            <li role="presentation"><a href="#jsonview_json" aria-controls="jsonview_json" role="tab" data-toggle="tab">Collapsed JSON</a></li>
+            <li role="presentation"><a href="#raw_json" aria-controls="raw_json" role="tab" data-toggle="tab">Raw JSON</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="digested_json"><div class="restclients-digested-response"></div></div>
+            <div role="tabpanel" class="tab-pane" id="jsonview_json"><div class="jsonview-response"></div></div>
+            <div role="tabpanel" class="tab-pane" id="raw_json"><div class="main-content"></div></div>
+          </div>
+        </div>
+
         <div class="content">
-            
             <div class="content-inner">
             <!-- add your site or application content here -->
             {% block content %}{% endblock %}
             </div>
-            
         </div>
         
         <div class="footer">
@@ -114,6 +132,9 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{% static "vendor/js/jquery-1.10.2.min.js" %}"><\/script>')</script>
 
+        <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+        <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
         <script type="text/javascript">
             window.support = {
                 is_mobile: {% if request.is_mobile %}true{% else %}false{% endif %},
@@ -126,6 +147,7 @@
         {% compress js %}
             <script src="{% static 'vendor/js/bootstrap-3.3.1.min.js' %}"></script>
             <script src="{% static 'vendor/js/handlebars-1.0.0.min.js' %}"></script>
+            <script src="{% static 'vendor/js/jquery-jsonview-1.2.1.js' %}"></script>
             <script src="{% static 'supporttools/js/main.js' %}"></script>
         {% endcompress %}
         {% block extra_js %}{% endblock %}
