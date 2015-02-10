@@ -30,7 +30,7 @@ $(function () {
 
     function anchor(href) {
         try {
-            var service = href.match(/^(\/((sws\/)?student|pws\/identity)\/v[0-9]+).*/);
+            var service = href.match(/^(\/((sws\/)?student|(pws\/)identity)\/v[0-9]+).*/);
             return location.href.substr(0, location.href.indexOf(service[1])) + href;
         } catch (err) {
             return "#";
