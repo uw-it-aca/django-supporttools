@@ -30,8 +30,8 @@ $(function () {
 
     function anchor(href) {
         try {
-            var service = href.match(/^\/(student|pws\/identity)\/v[0-9]+\//)[0];
-            return location.href.substr(0, location.href.indexOf(service)) + href;
+            var service = href.match(/^(\/((sws\/)?student|pws\/identity)\/v[0-9]+).*/);
+            return location.href.substr(0, location.href.indexOf(service[1])) + href;
         } catch (err) {
             return "#";
         }
@@ -43,6 +43,8 @@ $(function () {
             $a.attr('href', anchor(value));
             $a.html(value.replace(/([&\/,])/g, '$1&#8203;'));
             value = $a;
+        } else if (key.toLowerCase() === 'name') {
+            value = value.replace(/([ ])/g, '&nbsp;');
         } else {
             switch ($.type(value)) {
             case 'undefined':
@@ -125,7 +127,18 @@ $(function () {
                 });
             });
 
-            keys = $.map(d, function (o, k) { return ((o.valid) ? k : null); }).sort();
+            keys = $.map(d, function (o, k) { return ((o.valid) ? k : null); }).sort(function (a, b) {
+                var a_lower = a.toLowerCase(),
+                    b_lower = b.toLowerCase();
+
+                // special key sort preferences
+                if (a_lower == 'href'
+                    && (b_lower == 'name' || b_lower == 'regid')) {
+                    return 1;
+                }
+
+                return a - b;
+            });
 
             $li = $('<li>');
             $table = $('<table class="sws-array table table-striped"></table>');
