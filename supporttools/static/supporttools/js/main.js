@@ -29,20 +29,41 @@ $(function () {
     });
 
     function anchor(href) {
-        try {
-            var service = href.match(/^(\/((sws\/)?student|(pws\/)?identity)\/v[0-9]+).*/);
-            return location.href.substr(0, location.href.indexOf(service[1])) + href;
-        } catch (err) {
-            return "#";
+        var service = href.match(/^(\/((sws\/)?student|(pws\/)?identity)\/v[0-9]+).*/),
+            url = null;
+
+        if (service) {
+            $('.default-sidelinks a').each(function () {
+                var root = $(this).attr('href'),
+                    offset;
+
+                if (root) {
+                    offset = root.indexOf(service[1]);
+                    if (offset > 0) {
+                        url = root.substr(0, offset) + href;
+                        return false;
+                    }
+                }
+
+                return true;
+            });
         }
+
+        return url;
     }
 
     function presentJSONPropertyValue($container, key, value) {
+        var $a,
+            href;
+
         if (key.toLowerCase() === 'href') {
-            var $a = $('<a></a>');
-            $a.attr('href', anchor(value));
-            $a.html(value.replace(/([&\/,])/g, '$1&#8203;'));
-            value = $a;
+            href = anchor(value);
+            if (href) {
+                $a = $('<a></a>');
+                $a.attr('href', href);
+                $a.html(value.replace(/([&\/,])/g, '$1&#8203;'));
+                value = $a;
+            }
         } else if (key.toLowerCase() === 'name') {
             value = value.replace(/([ ])/g, '&nbsp;');
         } else {
@@ -93,6 +114,16 @@ $(function () {
 
             if (json_obj.length === 1) {
                 presentJSON($container, json_obj[0]);
+                return;
+            } else if ($.type(json_obj[0]) != 'object') {
+                d = [];
+                $.each(json_obj, function () {
+                    console.log('this = ' + this) ;
+                    value = presentJSONPropertyValue($container, '', this);
+                    d.push(value);
+                });
+
+                $container.append(d.join(', '));
                 return;
             }
 
@@ -215,6 +246,7 @@ $(function () {
         
 
         $('.jsonview-response').JSONView(window.restclients_json_data, { collapsed: true });
+
         presentJSON($('.restclients-digested-response'), window.restclients_json_data);
         $tabs.show();
         $('.table.sws-array').each(function () {
