@@ -112,18 +112,17 @@ $(function () {
 
         if ($.isArray(json_obj) && json_obj.length > 0) {
 
-            if (json_obj.length === 1) {
-                presentJSON($container, json_obj[0]);
-                return;
-            } else if ($.type(json_obj[0]) != 'object') {
+            if ($.type(json_obj[0]) != 'object') {
                 d = [];
                 $.each(json_obj, function () {
-                    console.log('this = ' + this) ;
                     value = presentJSONPropertyValue($container, '', this);
                     d.push(value);
                 });
 
                 $container.append(d.join(', '));
+                return;
+            } else if (json_obj.length === 1) {
+                presentJSON($container, json_obj[0]);
                 return;
             }
 
