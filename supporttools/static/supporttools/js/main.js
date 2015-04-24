@@ -61,11 +61,11 @@ $(function () {
             if (href) {
                 $a = $('<a></a>');
                 $a.attr('href', href);
-                $a.html(value.replace(/([&\/,])/g, '$1&#8203;'));
+                $a.html(value ? value.replace(/([&\/,])/g, '$1&#8203;') : 'NULL');
                 value = $a;
             }
         } else if (key.toLowerCase() === 'name') {
-            value = value.replace(/([ ])/g, '&nbsp;');
+            value = value ? value.replace(/([ ])/g, '&nbsp;') : 'NULL';
         } else {
             switch ($.type(value)) {
             case 'undefined':
