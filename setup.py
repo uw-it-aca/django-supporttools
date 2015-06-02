@@ -16,7 +16,6 @@ setup(
         'django',
         'django-compressor',
         'django-templatetag-handlebars',
-        'beautifulsoup',
     ],
     license='Apache License, Version 2.0',  # example license
     description='A Django app to ...',
