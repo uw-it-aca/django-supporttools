@@ -19,6 +19,3 @@ after_script:
   - coveralls
 notifications:
   email: false
-  webhooks:
-      urls:
-        - https://yarn.cac.washington.edu/rest/botalyst/v1/travis-ci
