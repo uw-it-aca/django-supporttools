@@ -30,6 +30,8 @@ Project settings.py
 
     # global support tools/apps
     'supporttools',
+
+    # other apps that are helpful - install separately
     'restclients',
     'userservice',
     'authz_group',
@@ -47,6 +49,8 @@ Project settings.py
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_mobileesp.middleware.UserAgentDetectionMiddleware',
+
+    # From the userservice app
     'userservice.user.UserServiceMiddleware',
 
 **AUTHENTICATION_BACKENDS**
@@ -66,10 +70,6 @@ Project settings.py
     
     'supporttools.context_processors.supportools_globals',
     'supporttools.context_processors.has_less_compiled',
-
-**TEMPLATE_DIRS**
-
-    'os.path.join(BASE_DIR, 'supporttools', 'templates'),'
 
 Mobile ESP settings...
 
@@ -103,7 +103,7 @@ Other settings...
 
 Project urls.py
 ---------------
-    # support urls
+    # support urls - based on the support tools you install
     url(r'^someadminapp/', include('someadminapp.urls')),
     url(r'^support/', include('supporttools.urls')),
     url(r'^users/', include('userservice.urls')),

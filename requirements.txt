@@ -1,3 +1,2 @@
--e git+https://github.com/abztrakt/django-mobileesp/#egg=django_mobileesp
--e git+https://github.com/vegitron/authz_group#egg=AuthZGroup
--e git+https://github.com/vegitron/django-userservice#egg=Django-UserService
+# Things need to be added to setup.py, not here.
+-e .
