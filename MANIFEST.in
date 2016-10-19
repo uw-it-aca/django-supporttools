@@ -1,3 +1,2 @@
-include README.md
-recursive-include supporttools/static *
-recursive-include supporttools/templates *
+include supporttools/VERSION
+recursive-include supporttools *

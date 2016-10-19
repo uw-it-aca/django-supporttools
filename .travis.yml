@@ -1,18 +1,31 @@
 sudo: false
 language: python
 python:
-  - "3.4"
-  - "2.7"
+- '3.4'
+- '2.7'
 install: pip install -r requirements.txt
 before_script:
-  - pip install coverage
-  - pip install python-coveralls
-  - pip install pep8
-  - cp travis-ci/manage.py manage.py
+- pip install coverage
+- pip install python-coveralls
+- pip install pep8
+- cp travis-ci/manage.py manage.py
 script:
-  - pep8 --exclude=migrations supporttools
-  - coverage run --source=supporttools manage.py test supporttools
+- pep8 --exclude=migrations supporttools
+- coverage run --source=supporttools manage.py test supporttools
 after_script:
-  - coveralls
+- coveralls
 notifications:
   email: false
+before_deploy:
+- find supporttools/ -name \*.pyc -exec rm {} \;
+- echo $TRAVIS_TAG > supporttools/VERSION
+deploy:
+  provider: pypi
+  server: https://testpypi.python.org/pypi
+  user: uw-it-axdd
+  skip_cleanup: true
+  password:
+    secure: UNbfvk8vV93F3gZgP2JiwfnxLEFmrlRX34LJEbm93NLxUMWMToRndA/v9qCNVw3ABA+6bt3xs59AlcxxXQy+Z8qgycvG/v4h2AT/nnTqwvf76ejdHwQVl4szKFCZqsThRVZVG7sGEowt0rrzmig9Io6H4O9XmeT+hSXxbeIOJ1U=
+  on:
+    tags: true
+    python: '2.7'
