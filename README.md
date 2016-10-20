@@ -14,14 +14,7 @@ Installation
 Install Support Tools in your project.
 
     $ cd [project]
-    $ pip install -e git+https://github.com/uw-it-aca/django-supporttools/#egg=django_supporttools
-
-**Install dependencies**
-
-Pip install the requirements.txt that was included.
-
-    $ cd [virtualenv] /src
-    $ pip install -r django-supporttools/requirements.txt
+    $ pip install Django-SupportTools
  
 Project settings.py
 ------------------

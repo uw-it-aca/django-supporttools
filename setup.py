@@ -1,38 +1,44 @@
 import os
 from setuptools import setup
 
-README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
+README = """
+See the README on `GitHub
+<https://github.com/uw-it-aca/django-supporttools>`_.
+"""
+
+# The VERSION file is created by travis-ci, based on the tag name
+version_path = 'supporttools/VERSION'
+VERSION = open(os.path.join(os.path.dirname(__file__), version_path)).read()
+VERSION = VERSION.replace("\n", "")
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+url = "https://github.com/uw-it-aca/django-supporttools"
 setup(
-    name='django-supporttools',
-    version='0.1',
+    name='Django-SupportTools',
+    version=VERSION,
     packages=['supporttools'],
+    author="UW-IT AXDD",
+    author_email="aca-it@uw.edu",
     include_package_data=True,
-    install_requires = [
+    install_requires=[
         'setuptools',
         'django',
         'django-compressor',
         'django-templatetag-handlebars',
     ],
-    license='Apache License, Version 2.0',  # example license
-    description='A Django app to ...',
+    license='Apache License, Version 2.0',
+    description=('A Django application used for theming and wrapping '
+                 'AXDD support tools.'),
     long_description=README,
-    url='http://www.example.com/',
-    author='Your Name',
-    author_email='yourname@example.com',
+    url=url,
     classifiers=[
-        'Environment :: Web Environment',
-        'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License', # example license
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Programming Language :: Python :: 3.4',
     ],
 )

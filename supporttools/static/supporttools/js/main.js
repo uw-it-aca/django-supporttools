@@ -61,11 +61,11 @@ $(function () {
             if (href) {
                 $a = $('<a></a>');
                 $a.attr('href', href);
-                $a.html(value.replace(/([&\/,])/g, '$1&#8203;'));
+                $a.html(value ? value.replace(/([&\/,])/g, '$1&#8203;') : 'NULL');
                 value = $a;
             }
         } else if (key.toLowerCase() === 'name') {
-            value = value.replace(/([ ])/g, '&nbsp;');
+            value = value ? value.replace(/([ ])/g, '&nbsp;') : 'NULL';
         } else {
             switch ($.type(value)) {
             case 'undefined':
@@ -112,18 +112,17 @@ $(function () {
 
         if ($.isArray(json_obj) && json_obj.length > 0) {
 
-            if (json_obj.length === 1) {
-                presentJSON($container, json_obj[0]);
-                return;
-            } else if ($.type(json_obj[0]) != 'object') {
+            if ($.type(json_obj[0]) != 'object') {
                 d = [];
                 $.each(json_obj, function () {
-                    console.log('this = ' + this) ;
                     value = presentJSONPropertyValue($container, '', this);
                     d.push(value);
                 });
 
                 $container.append(d.join(', '));
+                return;
+            } else if (json_obj.length === 1) {
+                presentJSON($container, json_obj[0]);
                 return;
             }
 
