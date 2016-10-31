@@ -50,5 +50,6 @@ Mobile ESP settings...
 
 Support Tools settings...
 
+    # Where the back link should go, and how it's labelled.
     SUPPORTTOOLS_PARENT_APP = "TestApp"
-    SUPPORTTOOLS_IS_OVERRIDEABLE = True
+    SUPPORTTOOLS_PARENT_APP_URL = "/"
