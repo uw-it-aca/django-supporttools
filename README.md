@@ -4,69 +4,44 @@
 ACA Support Tools
 =================
 
-A Django application used for theming and wrapping ACA support tools.
+A Django application used for theming and wrapping support tools.
 
 Installation
 ------------
 
-**Project directory**
+This should be installed as a requirement from a support tool.  You should not install this manually.
 
-Install Support Tools in your project.
 
-    $ cd [project]
-    $ pip install Django-SupportTools
- 
 Project settings.py
 ------------------
 
-**INSTALLED_APPS**
-
-    # global support tools/apps
-    'supporttools',
-
-    # other apps that are helpful - install separately
-    'restclients',
-    'userservice',
-    'authz_group',
-    'status_app',
-    
-    # project specific tools/apps
-    'someadminapp'
+Add these values to your project's settings.py:
 
 **MIDDLEWARE_CLASSES**
-    
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
 
-    # From the userservice app
+    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'userservice.user.UserServiceMiddleware',
 
-**AUTHENTICATION_BACKENDS**
+Note: django_mobileesp does not support the new-style middleware, so you must use MIDDLEWARE_CLASSES instead of MIDDLEWARE if you are on Django 1.10 or higher.
 
-    'django.contrib.auth.backends.RemoteUserBackend',
+**INSTALLED_APPS**
+
+    'supporttools',
+    'django_mobileesp',
+
 
 **TEMPLATE_CONTEXT_PROCESSORS**
-    
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-    
+
+Pre Django 1.10, add these values to your TEMPLATE_CONTEXT_PROCESSORS setting.
+
+For Django 1.10, add them to TEMPLATES.OTPIONS.context_processors.
+
     'supporttools.context_processors.supportools_globals',
     'supporttools.context_processors.has_less_compiled',
 
 Mobile ESP settings...
 
-    from django_mobileesp.detector import agent
+    from django_mobileesp.detector import mobileesp_agent as agent
 
     DETECT_USER_AGENTS = {
     'is_tablet' : agent.detectTierTablet,
@@ -77,28 +52,3 @@ Support Tools settings...
 
     SUPPORTTOOLS_PARENT_APP = "TestApp"
     SUPPORTTOOLS_IS_OVERRIDEABLE = True
-
-Status App settings...
-
-    STATUS_APP_DISPATCHERS = ['status_app.dispatcher.memory.dispatch']
-
-    STATUS_APP_RECEIVERS = [
-        'restclients.signals.rest_request.rest_request_receiver',
-        'restclients.signals.success.rest_request_passfail_receiver'
-    ]
-    
-Other settings...
-    
-    AUTHZ_GROUP_BACKEND = 'authz_group.authz_implementation.all_ok.AllOK'       
-    USERSERVICE_ADMIN_GROUP = ' '
-    RESTCLIENTS_ADMIN_GROUP = ' '
-    RESTCLIENTS_SWS_DAO_CLASS = 'restclients.dao_implementation.sws.File'
-
-Project urls.py
----------------
-    # support urls - based on the support tools you install
-    url(r'^someadminapp/', include('someadminapp.urls')),
-    url(r'^support/', include('supporttools.urls')),
-    url(r'^users/', include('userservice.urls')),
-    url(r'^restclients/', include('restclients.urls')),
-    url(r'^status/', include('status_app.urls')),
