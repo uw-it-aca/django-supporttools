@@ -4,7 +4,7 @@
     {% if home_url %}
     <li><a href="{{ home_url }}">{{ home_link|default:"Support Home" }}</a></li>
     {% endif %}
-    {% url 'supporttools_home' as user_override_url %}
+    {% url 'userservice_override' as user_override_url %}
     {% if user_override_url %}
     <li><a href="{{ user_override_url }}">{{ userservice_link|default:"User Override" }}</a></li>
     {% endif %}
