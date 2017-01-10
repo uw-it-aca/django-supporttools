@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
+from django.conf.urls import url
+from supporttools.views import home
 
-urlpatterns = patterns('',
-                       # for now... make the home view the default landing for
-                       # /support
-                       url(r'^', 'supporttools.views.home'),
-                       # url(r'^', include('status_app.urls')),
-                       )
+urlpatterns = [
+    # for now... make the home view the default landing for
+    # /support
+    url(r'^', home, name='supporttools_home'),
+    # url(r'^', include('status_app.urls')),
+    ]
