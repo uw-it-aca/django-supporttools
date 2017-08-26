@@ -1,2 +1,0 @@
-# Things need to be added to setup.py, not here.
--e .
