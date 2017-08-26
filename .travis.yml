@@ -19,10 +19,9 @@ before_script:
 - pip install python-coveralls
 - pip install -U Django==$DJANGO_VERSION
 - cp travis-ci/manage.py manage.py
-- python manage.py migrate
 
 script:
-- pep8 --exclude=migrations supporttools
+- pep8 supporttools/
 - python -m compileall supporttools/
 - coverage run --source=supporttools manage.py test supporttools
 after_script:
