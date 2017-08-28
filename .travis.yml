@@ -12,7 +12,6 @@ env:
 before_script:
 - pip install -e .
 - pip install pep8
-- pip install nose2
 - pip install coverage
 - pip install python-coveralls
 - pip install -U Django==$DJANGO_VERSION
