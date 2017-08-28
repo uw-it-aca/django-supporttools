@@ -1,24 +1,24 @@
 sudo: false
 language: python
 python:
+- '3.6'
 - '3.4'
 - '2.7'
 env:
-- DJANGO_VERSION=1.6.*
-- DJANGO_VERSION=1.7.*
 - DJANGO_VERSION=1.8.*
 - DJANGO_VERSION=1.9.*
 - DJANGO_VERSION=1.10.*
 
-install: pip install -r requirements.txt
 before_script:
+- pip install -e .
+- pip install pep8
 - pip install coverage
 - pip install python-coveralls
-- pip install pep8
 - pip install -U Django==$DJANGO_VERSION
 - cp travis-ci/manage.py manage.py
+
 script:
-- pep8 --exclude=migrations supporttools
+- pep8 supporttools/
 - python -m compileall supporttools/
 - coverage run --source=supporttools manage.py test supporttools
 after_script:
@@ -30,7 +30,6 @@ before_deploy:
 - echo $TRAVIS_TAG > supporttools/VERSION
 deploy:
   provider: pypi
-  server: https://pypi.python.org/pypi
   user: uw-it-aca
   skip_cleanup: true
   password:
