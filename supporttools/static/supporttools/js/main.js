@@ -125,7 +125,7 @@ $(function () {
                     window.support.suppress_json_tables) {
                 $.each(json_obj, function () {
                     presentJSON($container, this);
-                    $container.append($('<p>'));
+                    $container.append($('<p></p>'));
                 });
                 return;
             }
