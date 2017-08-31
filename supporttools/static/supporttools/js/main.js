@@ -121,8 +121,12 @@ $(function () {
 
                 $container.append(d.join(', '));
                 return;
-            } else if (json_obj.length === 1) {
-                presentJSON($container, json_obj[0]);
+            } else if (json_obj.length === 1 ||
+                    window.support.suppress_json_tables) {
+                $.each(json_obj, function () {
+                    presentJSON($container, this);
+                    $container.append($('<p>'));
+                });
                 return;
             }
 
