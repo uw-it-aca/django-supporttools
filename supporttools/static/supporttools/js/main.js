@@ -1,5 +1,5 @@
 /*jslint browser: true, plusplus: true, regexp: true */
-/*global $, jQuery, presentJSON */
+/*global $, jQuery */
 
 $(function () {
     "use strict";
@@ -15,7 +15,7 @@ $(function () {
     else {
         $('a#tool_menu_button').hide();
         $('#tool_menu').removeClass('hide-div');
-        
+
         // get correct height for sidebar
         calculate_sidebar_height();
     }
@@ -75,7 +75,7 @@ $(function () {
                 if (value.length === 0) {
                     return false; // ignore
                 }
-                // fall thru
+                /* falls through */
             case 'object':
                 presentJSON($container, value);
                 return true; // handled
@@ -86,7 +86,7 @@ $(function () {
                 if (value.length === 0) {
                     return false; // ignore
                 }
-                // fall thru
+                /* falls through */
             default:
                 break;
             }
@@ -121,8 +121,12 @@ $(function () {
 
                 $container.append(d.join(', '));
                 return;
-            } else if (json_obj.length === 1) {
-                presentJSON($container, json_obj[0]);
+            } else if (json_obj.length === 1 ||
+                    window.support.suppress_json_tables) {
+                $.each(json_obj, function () {
+                    presentJSON($container, this);
+                    $container.append($('<p></p>'));
+                });
                 return;
             }
 
@@ -134,17 +138,20 @@ $(function () {
                     value = a_obj[this];
                     if (d.hasOwnProperty(this)) {
                         if (d[this].valid) {
-                            d[this].valid = !(((($.type(value) === 'string' && $.type(d[this].last_value) === 'string')
-                                                || ($.type(value) === 'number' && $.type(d[this].last_value) === 'number'))
-                                               && value == d[this].last_value));
+                            d[this].valid = !(((
+                                ($.type(value) === 'string' &&
+                                 $.type(d[this].last_value) === 'string') ||
+                                ($.type(value) === 'number' &&
+                                 $.type(d[this].last_value) === 'number')) &&
+                                    value === d[this].last_value));
                         } else {
-                            if (($.type(value) === 'string'
-                                 && $.type(d[this].last_value) === 'string'
-                                 && value.length && value != d[this].last_value)
-                                || ($.type(value) === 'number'
-                                    && $.type(d[this].last_value) === 'number'
-                                    && value != d[this].last_value)
-                                || (d[this].last_value === null && value !== null)) {
+                            if (($.type(value) === 'string' &&
+                                    $.type(d[this].last_value) === 'string' &&
+                                    value.length && value != d[this].last_value) ||
+                                ($.type(value) === 'number' &&
+                                    $.type(d[this].last_value) === 'number' &&
+                                    value != d[this].last_value) ||
+                                        (d[this].last_value === null && value !== null)) {
                                 d[this].valid = true;
                             }
                         }
@@ -162,8 +169,8 @@ $(function () {
                     b_lower = b.toLowerCase();
 
                 // special key sort preferences
-                if (a_lower == 'href'
-                    && (b_lower == 'name' || b_lower == 'regid')) {
+                if (a_lower === 'href' &&
+                    (b_lower === 'name' || b_lower === 'regid')) {
                     return 1;
                 }
 
@@ -230,8 +237,8 @@ $(function () {
     }
 
     // display digested JSON
-    if (window.hasOwnProperty('restclients_json_data')
-        && window.restclients_json_data) {
+    if (window.hasOwnProperty('restclients_json_data') &&
+            window.restclients_json_data) {
         var $h1 = $('.restclients-response-content h1').detach(),
             $form = $('.restclients-response-content form').detach(),
             $tabs = $('#restclient-tabs').detach(),
@@ -242,7 +249,6 @@ $(function () {
         $('.restclients-response-content').append($form);
         $tabs.appendTo('.restclients-response-content');
         $('.main-content').html(original_html);
-        
 
         $('.jsonview-response').JSONView(window.restclients_json_data, { collapsed: true });
 
@@ -258,27 +264,21 @@ $(function () {
             });
         });
     }
-    
 });
 
+function calculate_sidebar_height() {
+    var base_h = $(".header").height(),
+        header_h = 60,
+        netid_h = $(".tool-app").outerHeight(),
+        footer_h = $(".footer").outerHeight(),
+        diff_h = base_h - (header_h + netid_h + footer_h) - 20;
+
+    $(".tool-list-inner").height(diff_h);
+}
+
 $(window).resize(function() {
-    
     if (!window.support.is_mobile && !window.support.is_tablet) {
         // get correct height for sidebar
         calculate_sidebar_height();
     }
-        
 });
-
-
-function calculate_sidebar_height() {
-    
-    var base_h = $(".header").height();
-    var header_h = 60;
-    var netid_h = $(".tool-app").outerHeight();
-    var footer_h = $(".footer").outerHeight(); 
-    
-    var diff_h = base_h - (header_h + netid_h + footer_h) - 20;
-
-    $(".tool-list-inner").height(diff_h);
-}
