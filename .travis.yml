@@ -13,14 +13,14 @@ env:
 before_script:
 - pip install -U Django==$DJANGO_VERSION
 - pip install -e .
-- pip install pep8
+- pip install pycodestyle
 - pip install coverage
 - pip install python-coveralls
 - npm install -g jshint
 - cp travis-ci/manage.py manage.py
 
 script:
-- pep8 supporttools/
+- pycodestyle supporttools/
 - jshint supporttools/static/supporttools/js/ --verbose
 - python -m compileall supporttools/
 - coverage run --source=supporttools manage.py test supporttools
