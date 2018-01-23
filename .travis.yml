@@ -15,7 +15,7 @@ before_script:
 - pip install coverage
 - pip install python-coveralls
 - pip install -U Django==$DJANGO_VERSION
-- npm install jshint
+- npm install -g jshint
 - cp travis-ci/manage.py manage.py
 
 script:
