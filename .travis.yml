@@ -1,15 +1,10 @@
 sudo: false
 language: python
 python:
-- '3.6'
-- '3.4'
 - '2.7'
+- '3.6'
 env:
-- DJANGO_VERSION=1.8.*
-- DJANGO_VERSION=1.9.*
-- DJANGO_VERSION=1.10.*
 - DJANGO_VERSION=1.11.*
-
 before_script:
 - pip install -U Django==$DJANGO_VERSION
 - pip install -e .
@@ -18,7 +13,6 @@ before_script:
 - pip install python-coveralls
 - npm install -g jshint
 - cp travis-ci/manage.py manage.py
-
 script:
 - pycodestyle supporttools/
 - jshint supporttools/static/supporttools/js/ --verbose
@@ -26,8 +20,6 @@ script:
 - coverage run --source=supporttools manage.py test supporttools
 after_script:
 - coveralls
-notifications:
-  email: false
 before_deploy:
 - find supporttools/ -name \*.pyc -exec rm {} \;
 - echo $TRAVIS_TAG > supporttools/VERSION
@@ -40,4 +32,4 @@ deploy:
   on:
     tags: true
     python: '2.7'
-    condition: $DJANGO_VERSION = 1.10.*
+    condition: $DJANGO_VERSION = 1.11.*
