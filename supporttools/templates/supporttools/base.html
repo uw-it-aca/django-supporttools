@@ -15,9 +15,9 @@
 
         <!-- favicon 16px and 32px combined -->
         <link rel="shortcut icon" href="{% static 'uw/ico/favicon.ico' %}" type="image/x-icon">
-    
+
         <!-- ios icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="{% static 'uw/ico/apple-touch-icon-180x180-precomposed.png' %}"> 
+        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="{% static 'uw/ico/apple-touch-icon-180x180-precomposed.png' %}">
         <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static 'uw/ico/apple-touch-icon-152x152-precomposed.png' %}">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'uw/ico/apple-touch-icon-144x144-precomposed.png' %}">
         <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static 'uw/ico/apple-touch-icon-120x120-precomposed.png' %}">
@@ -26,10 +26,10 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'uw/ico/apple-touch-icon-72x72-precomposed.png' %}">
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static 'uw/ico/apple-touch-icon-57x57-precomposed.png' %}">
         <link rel="apple-touch-icon-precomposed" href="{% static 'uw/ico/apple-touch-icon-precomposed.png' %}">
-        
+
         <!-- android icons -->
         <link rel="shortcut icon" sizes="196x196" href="{% static 'uw/ico/android-196x196.png' %}">
-        
+
         <!-- windows8 tile icons -->
         <meta name="msapplication-TileColor" content="#4b2e84">
         <meta name="msapplication-TileImage" content="{% static 'uw/ico/win8-144x144.png' %}">
@@ -37,8 +37,8 @@
         <meta name="msapplication-square150x150logo" content="{% static 'uw/ico/win8-150x150.png' %}" />
         <meta name="msapplication-wide310x150logo" content="{% static 'uw/ico/win8-310x150.png' %}" />
         <meta name="msapplication-square310x310logo" content="{% static 'uw/ico/win8-310x310.png' %}" />
-                
-        <!-- google fonts --> 
+
+        <!-- google fonts -->
         <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700,200' rel='stylesheet' type='text/css'>
 
         <!-- datatables -->
@@ -73,20 +73,24 @@
 
         <div class="header">
             <div class="header-inner">
-                
+
                 <div class="clearfix tool-header">
                     <h1 class="pull-left tool-name"><a href="{{ supporttools_parent_app_url|default:'/' }}">{{ supporttools_parent_app|default:"Back" }}</a> <span class="tool-support">Support</span></h1>
                     <div class="pull-right tool-menu" style="display:inline-block;"><a href="#" id="tool_menu_button"><i class="fa fa-bars"></i></a></div>
                 </div>
 
                 <div id="tool_menu" class="tool-list hide-div" role="navigation">
-                    
+
                     <div class="clearfix tool-app">
-                        <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i> {{supporttools_user}}</div>
+                        <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i>&nbsp;{{supporttools_user}}
+                        {% url 'saml_logout' as logout_url %}
+                        {% if logout_url %}
+                        &nbsp;<a class="label label-danger" href="{{ logout_url }}">Logout</a></div>
+                        {% endif %}
                     </div>
-                    
+
                     <h2 class="sr-only">Tool Navigation</h2>
-                    
+
                     <div class="tool-list-inner">
                         {% load sidebar_links %}
                         {% sidebar_links %}
@@ -118,7 +122,7 @@
             {% block content %}{% endblock %}
             </div>
         </div>
-        
+
         <div class="footer">
             <div class="footer-tagline">Copyright &copy; 2012-{% now "Y" %}<br/>UW Information Technology - ACA</div>
         </div>
