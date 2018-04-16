@@ -85,8 +85,9 @@
                         <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i>&nbsp;{{supporttools_user}}
                         {% url 'saml_logout' as logout_url %}
                         {% if logout_url %}
-                        &nbsp;<a class="label label-danger" href="{{ logout_url }}">Logout</a></div>
+                        &nbsp;<a class="label label-danger" href="{{ logout_url }}">Logout</a>
                         {% endif %}
+                        </div>
                     </div>
 
                     <h2 class="sr-only">Tool Navigation</h2>
