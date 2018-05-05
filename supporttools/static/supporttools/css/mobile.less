@@ -26,59 +26,59 @@ body {
     .header-inner { padding: 0 15px;
 
         .tool-app { margin: 0; line-height: 30px; }
-        
-        .tool-header { line-height: 60px; 
-            
+
+        .tool-header { line-height: 60px;
+
             /* supporttools header/logo */
-            h1.tool-name { margin:0; line-height: 60px; text-transform: uppercase; font-size: 2.5em; color: @primary; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 800; 
-                
+            h1.tool-name { margin:0; line-height: 60px; text-transform: uppercase; font-size: 2.5em; color: @primary; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 800;
+
                 a { color: @primary; text-decoration: underline; }
             }
-            
+
             .tool-support { color: darken(@sidebar, 30%); font-weight: 200; }
-            
+
             .tool-menu {
-            
+
                 a { color: darken(@sidebar, 30%); background: darken(@sidebar, 5%); border-radius: 3px; padding: 5px 8px; }
             }
         }
         .tool-list { background: @sidebar;
-            
+
             -moz-transition: .5s;
             -ms-transition: .5s;
             -o-transition: .5s;
             -webkit-transition: .5s;
             transition: .5s;
-    
+
             .tool-list-inner { margin: 2em 0;
-                
+
                 h3 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.15em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; margin: 0; }
-                
+
                 /** tool menu list **/
-                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; text-transform: uppercase; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 200; font-size: 1.4em; letter-spacing: 1px; 
-                    
-                    li { line-height: 35px; 
-                        
+                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; text-transform: uppercase; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 200; font-size: 1.4em; letter-spacing: 1px;
+
+                    li { line-height: 35px;
+
                         a { }
                     }
                 }
-    
+
             }
-        }     
-        
+        }
+
     }
-    
+
 }
 
-.content { 
-    .content-inner { padding: 0 15px;  
-        
+.content {
+    .content-inner { padding: 0 15px;
+
         /* page header */
         h2 { margin:0; line-height:60px; text-transform: uppercase; color: lighten(@secondary, 10%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 300; font-size: 2.15em; letter-spacing: 1px; /*border-bottom: solid 2px darken(@sidebar, 5%);*/ }
-        
+
         /* page sub header */
         h3 { line-height:40px; text-transform: uppercase; color: lighten(@secondary, 10%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 300; font-size: 1.75em; letter-spacing: 1px; }
-        
+
         /* search results table */
         .table {
         th {
@@ -86,16 +86,16 @@ body {
         }
         td { vertical-align: middle; }
         }
-        
+
         /* reset bootstrap container class */
         .container { max-width: none; margin: 0; padding: 0; }
-                
+
     }
-    
-   
+
+
 }
 
-.footer { padding: 0 15px; margin: 2em 0 10px 0; display: block; height: 50px;   
+.footer { padding: 0 15px; margin: 2em 0 10px 0; display: block; height: 50px;
 
     .footer-tagline { color: @secondary; font-size: .75em; color: darken(@sidebar, 30%); }
 }
@@ -108,6 +108,57 @@ body {
 .form-group {
     .form-control { display: inline-block; width: 82%; }
 }
+
+
+/*** Notices ***/
+.notice-admin {
+
+    /* Set back to bootstrap default */
+    .form-group .form-control {
+        width: 100%;
+        display: block;
+    }
+
+    .form-inline .form-group:not(:last-child),
+    .form-inline .form-group .checkbox {
+        margin-right: 2em;
+    }
+
+    @media (min-width: 768px) {
+        .form-inline .form-control {
+            display: inline-block;
+            width: auto;
+        }
+
+        .form-inline .input-group>.form-control {
+            width: 100%;
+        }
+
+        .form-inline .input-group .form-control {
+            width: auto;
+        }
+    }
+
+    ul.affiliation {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        -webkit-columns-count: 4;
+        -moz-columns-count: 4;
+        column-count: 4;
+        -webkit-column-gap: 8px;
+        -moz-column-gap: 8px;
+        column-gap: 8px;
+
+        li {
+            display: inline-block;
+        }
+    }
+
+
+}
+
 
 /*** developer ***/
 
@@ -179,8 +230,8 @@ margin-bottom: 10px;
 .restclients-header-url span.glyphicon { font-size: 1.4em; padding: 0 5px; vertical-align: middle; color: #999; }
 .restclients-header-url input { display:inline-block; width: 95%; }
 .restclients-response-content {
-    background: #fff; 
-    padding: 1em; 
+    background: #fff;
+    padding: 1em;
     margin: 0 -5px;
     min-height: 20px;
     background-color: #fff;
