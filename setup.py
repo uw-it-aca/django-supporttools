@@ -24,7 +24,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'setuptools',
-        'django==1.11.13',
+        'django>=1.11.13,<2.0',
         'django-compressor==2.2',
         'django-templatetag-handlebars',
         'django_mobileesp',
