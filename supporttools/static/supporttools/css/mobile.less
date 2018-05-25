@@ -1,4 +1,4 @@
-/*** breakpoints ***/
+ /*** breakpoints ***/
 
 @tablet: ~"screen and (min-width: 768px)";
 
@@ -52,17 +52,18 @@ body {
     
             .tool-list-inner { margin: 2em 0;
                 
-                h3 { text-transform: uppercase; color: darken(@sidebar, 30%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.15em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; margin: 0; }
+                h3 { text-transform: uppercase; color: darken(@sidebar, 90%); font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 400; font-size: 1.15em; letter-spacing: 1px; border-bottom: solid 2px darken(@sidebar, 5%); padding-bottom: 8px; margin: 0; }
                 
                 /** tool menu list **/
-                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; text-transform: uppercase; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 200; font-size: 1.4em; letter-spacing: 1px; 
+                ul { margin-bottom: 1.5em; padding-left: 0; list-style: none; font-family: 'Yanone Kaffeesatz', sans-serif; font-weight: 300; font-size: 1.4em; letter-spacing: 1px; 
                     
                     li { line-height: 35px; 
                         
-                        a { }
+                        a {color:#003399;
+						}
                     }
                 }
-    
+				h4 {color: darken(@sidebar, 90%); font-family: Helvetica, Arial, Verdana, sans-serif; font-weight: 500; font-size: 1.15em; padding-bottom: 8px; margin: 0; } //web services forms
             }
         }     
         
@@ -167,6 +168,7 @@ margin-bottom: 10px;
 
 .user-service button[type="submit"] {
     margin-top: 5px;
+    text-transform: capitalize;
 }
 
 /*** restclients overrides ***/
