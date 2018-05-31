@@ -82,7 +82,7 @@
                 <div id="tool_menu" class="tool-list hide-div" role="navigation">
 
                     <div class="clearfix tool-app">
-                        <div class="pull-right" style="display:inline-block; color:red;"><i class="fa fa-user"></i>&nbsp;{{supporttools_user}}
+                        <div class="pull-right" style="display:inline-block;"><i class="fa fa-user"></i>&nbsp;{{supporttools_user}}
                         {% url 'saml_logout' as logout_url %}
                         {% if logout_url %}
                         &nbsp;<a class="label label-danger" href="{{ logout_url }}">Logout</a>
