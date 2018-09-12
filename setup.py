@@ -24,11 +24,11 @@ setup(
     include_package_data=True,
     install_requires=[
         'setuptools',
-        'django>=1.11.13,<2.0',
+        'django>2.1,<3.0',
         'django-compressor==2.2',
         'django-templatetag-handlebars',
         'django_mobileesp',
-        'django-userservice>=2.0.2,<3.0',
+        'django-userservice>=3.1,<4.0',
     ],
     license='Apache License, Version 2.0',
     description=('A Django application used for theming and wrapping '
@@ -40,7 +40,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6',
     ],
 )
