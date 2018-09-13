@@ -1,10 +1,9 @@
 sudo: false
 language: python
 python:
-- '2.7'
 - '3.6'
 env:
-- DJANGO_VERSION=1.11.*
+- DJANGO_VERSION=2.1.1
 before_script:
 - pip install -U Django==$DJANGO_VERSION
 - pip install -e .
@@ -31,5 +30,5 @@ deploy:
     secure: QSvfDjMYBNr5zZdek6k4Z+ePBg4JPEbdXEXMZzefGlvevSvrNDgjt5DzjFa+P7HkyNSH1BeeYjyGGqxY0F1GZ1s2629dHl9CT33gG0nd9iWgQ6yJe7lC6LYjJz8YAl5xJCY2as8LwclbL5OalesAXx2/djs5wL268gCU+Lm9h9A=
   on:
     tags: true
-    python: '2.7'
-    condition: $DJANGO_VERSION = 1.11.*
+    python: '3.6'
+
