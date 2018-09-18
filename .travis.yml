@@ -2,10 +2,7 @@ sudo: false
 language: python
 python:
 - '3.6'
-env:
-- DJANGO_VERSION=2.1.1
 before_script:
-- pip install -U Django==$DJANGO_VERSION
 - pip install -e .
 - pip install pycodestyle
 - pip install coverage
