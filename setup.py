@@ -28,7 +28,7 @@ setup(
         'django-compressor==2.2',
         'django-templatetag-handlebars',
         'django_mobileesp',
-        'django-userservice>=3.1,<4.0',
+        'django-userservice>3.1,<4.0',
     ],
     license='Apache License, Version 2.0',
     description=('A Django application used for theming and wrapping '
