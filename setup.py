@@ -23,10 +23,8 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'setuptools',
         'django>2.1,<3.0',
         'django-compressor==2.2',
-        'django-templatetag-handlebars',
         'django_mobileesp',
         'django-userservice>3.1,<4.0',
     ],
