@@ -142,9 +142,9 @@
 
         <script type="text/javascript">
             window.support = {
-                is_mobile: {% if request.is_mobile %}true{% else %}false{% endif %},
-                is_tablet: {% if request.is_tablet %}true{% else %}false{% endif %},
-                is_desktop: {% if not request.is_mobile and not request.is_tablet %}true{% else %}false{% endif %}
+                is_mobile: {% if request.user_agent.is_mobile %}true{% else %}false{% endif %},
+                is_tablet: {% if request.user_agent.is_tablet %}true{% else %}false{% endif %},
+                is_desktop: {% if request.user_agent.is_pc %}true{% else %}false{% endif %}
             };
         </script>
 

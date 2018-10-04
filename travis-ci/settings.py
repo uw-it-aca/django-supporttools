@@ -11,6 +11,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'supporttools',
+    'compressor',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -18,6 +20,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -35,6 +38,18 @@ DATABASES = {
     }
 }
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+            ],
+        },
+    },
+]
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Los_Angeles'
@@ -45,4 +60,5 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
