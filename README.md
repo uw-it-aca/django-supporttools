@@ -19,34 +19,25 @@ Add these values to your project's settings.py:
 
 **MIDDLEWARE_CLASSES**
 
-    'django_mobileesp.middleware.UserAgentDetectionMiddleware',
     'userservice.user.UserServiceMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 
-Note: django_mobileesp does not support the new-style middleware, so you must use MIDDLEWARE_CLASSES instead of MIDDLEWARE if you are on Django 1.10 or higher.
 
 **INSTALLED_APPS**
 
     'supporttools',
-    'django_mobileesp',
+    'compressor',
+    'django_user_agents',
 
 
 **TEMPLATE_CONTEXT_PROCESSORS**
 
-Pre Django 1.10, add these values to your TEMPLATE_CONTEXT_PROCESSORS setting.
+Add to TEMPLATES.OPTIONS.context_processors.
 
-For Django 1.10, add them to TEMPLATES.OTPIONS.context_processors.
-
+    'django.template.context_processors.request',
     'supporttools.context_processors.supportools_globals',
     'supporttools.context_processors.has_less_compiled',
 
-Mobile ESP settings...
-
-    from django_mobileesp.detector import mobileesp_agent as agent
-
-    DETECT_USER_AGENTS = {
-    'is_tablet' : agent.detectTierTablet,
-    'is_mobile': agent.detectMobileQuick,
-    }
 
 Support Tools settings...
 
