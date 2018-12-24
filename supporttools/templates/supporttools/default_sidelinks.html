@@ -12,6 +12,10 @@
     {% if status_url %}
     <li><a href="{{ status_url }}">{{ supporttools_parent_app|default:"" }} {{ status_app_link|default:"Status" }}</a></li>
     {% endif %}
+    {% url 'manage_persistent_messages' as manage_messages_url %}
+    {% if manage_messages_url %}
+    <li><a href="{{ manage_messages_url }}">{{ persistent_message_link|default:"Persistent Messages" }}</a></li>
+    {% endif %}
     {% url 'restclients_proxy' 'sws' 'student/v5.json' as sws_url %}
     {% if sws_url %}
     <li><a href="{{ sws_url }}">{{ restclients_sws_link|default:"Browse Student Web Service" }}</a></li>
