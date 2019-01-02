@@ -41,22 +41,22 @@
         <!-- google fonts -->
         <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700,200' rel='stylesheet' type='text/css'>
 
-        <!-- datatables -->
+        <!-- css dependencies -->
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css" />
 
-        <!-- mobile first styles -->
+        <!-- local css -->
         {% compress css %}
-            <link rel="stylesheet" href="{% static 'vendor/css/bootstrap-3.3.1.min.css' %}">
-            <link rel="stylesheet" href="{% static 'vendor/css/font-awesome-4.2.0.min.css' %}">
-            <link rel="stylesheet" href="{% static 'vendor/css/jquery-jsonview-1.2.1.css' %}">
-            <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/mobile.less' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/css/jquery-jsonview-1.2.1.css' %}">
+        <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/mobile.less' %}">
         {% endcompress %}
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
         {% compress css %}
-            <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/desktop.less' %}">
+        <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/desktop.less' %}">
         {% endcompress %}
         {% endif %}
         {% block extra_css %}{% endblock %}
@@ -133,13 +133,14 @@
             <span class="label label-danger">{% if request.is_mobile %}mobile{% elif request.is_tablet %}tablet{% else %}desktop{% endif %}</span>
         </div>
 
-        <!-- jquery -->
+        <!-- javascript dependencies -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{% static "vendor/js/jquery-1.10.2.min.js" %}"><\/script>')</script>
-
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
         <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-
+        <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
         <script type="text/javascript">
             window.support = {
                 is_mobile: {% if request.user_agent.is_mobile %}true{% else %}false{% endif %},
@@ -148,12 +149,10 @@
             };
         </script>
 
-        <!-- javascript -->
+        <!-- local javascript -->
         {% compress js %}
-            <script src="{% static 'vendor/js/bootstrap-3.3.1.min.js' %}"></script>
-            <script src="{% static 'vendor/js/handlebars-1.0.0.min.js' %}"></script>
-            <script src="{% static 'vendor/js/jquery-jsonview-1.2.1.js' %}"></script>
-            <script src="{% static 'supporttools/js/main.js' %}"></script>
+        <script src="{% static 'vendor/js/jquery-jsonview-1.2.1.js' %}"></script>
+        <script src="{% static 'supporttools/js/main.js' %}"></script>
         {% endcompress %}
         {% block extra_js %}{% endblock %}
     </body>
