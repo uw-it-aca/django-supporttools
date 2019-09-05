@@ -152,10 +152,8 @@
         </script>
 
         <!-- local javascript -->
-        {% compress js %}
         <script src="{% static 'vendor/js/jquery-jsonview-1.2.1.js' %}"></script>
         <script src="{% static 'supporttools/js/main.js' %}"></script>
-        {% endcompress %}
         {% block extra_js %}{% endblock %}
     </body>
 </html>
