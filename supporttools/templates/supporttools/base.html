@@ -49,18 +49,11 @@
 
 
         <!-- local css -->
-        {% if has_compress %}
-          {% include "supporttools/compress_mobile_css.html" %}
-        {% else %}
-          {% include "supporttools/mobile_css.html" %}
-        {% endif %}
+        <link rel="stylesheet" href="{% static 'supporttools/css/mobile.css' %}">
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
-          {% if has_compress %}
-            {% include "supporttools/compress_desktop_css.html" %}
-          {% endif %}
-        {% endif %}
+        <link rel="stylesheet" href="{% static 'supporttools/css/desktop.css' %}">
         {% block extra_css %}{% endblock %}
 
         <!-- chart.js required in head to work -->
