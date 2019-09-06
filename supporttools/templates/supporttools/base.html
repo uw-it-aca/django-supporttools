@@ -49,20 +49,19 @@
 
 
         <!-- local css -->
-        <link rel="stylesheet" href="{% static 'supporttools/css/mobile.css' %}">
+        <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/mobile.less' %}">
 
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
-        <link rel="stylesheet" href="{% static 'supporttools/css/desktop.css' %}">
+        <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/desktop.less' %}">
+        {% endif %}
+
         {% block extra_css %}{% endblock %}
 
         <!-- chart.js required in head to work -->
         <script src="{% static 'vendor/js/chart.min.js' %}"></script>
 
-        {% if not has_less_compiled %}
         <script src="{% static 'vendor/js/less-1.7.0.min.js' %}"></script>
-        {% endif %}
-
     </head>
     <body>
 
