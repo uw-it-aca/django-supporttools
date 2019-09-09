@@ -135,6 +135,7 @@
         <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
         <script type="text/javascript">
             window.support = {
                 is_mobile: {% if request.user_agent.is_mobile %}true{% else %}false{% endif %},
@@ -144,7 +145,6 @@
         </script>
 
         <!-- local javascript -->
-        <script src="{% static 'vendor/js/jquery-jsonview-1.2.1.js' %}"></script>
         <script src="{% static 'supporttools/js/main.js' %}"></script>
         {% block extra_js %}{% endblock %}
     </body>
