@@ -1,8 +1,7 @@
 from django.urls import reverse
 from django.test import TestCase
 from django.conf import settings
-from supporttools.context_processors import (
-    has_less_compiled, has_google_analytics)
+from supporttools.context_processors import has_google_analytics
 from supporttools.tests import get_request
 
 
