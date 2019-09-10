@@ -16,6 +16,18 @@ def supportools_globals(request):
     return (params)
 
 
+def has_less_compiled(request):
+    """ See if django-compressor is being used to precompile less
+    """
+    key = getattr(settings, "COMPRESS_PRECOMPILERS", None)
+    has_less_precompiler = False
+    if key is not None and len(key) > 0:
+        for entry in key:
+            if entry[0] == "text/less":
+                has_less_precompiler = True
+    return {"has_less_compiled": has_less_precompiler}
+
+
 def has_google_analytics(request):
     ga_key = getattr(settings, 'GOOGLE_ANALYTICS_KEY', False)
     return {
