@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ supporttools_parent_app|default:"ACA" }} Support Tools</title>
+        <title>{{ supporttools_parent_app|default:"AXDD" }} Support Tools</title>
         <meta name="description" content="">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
         <meta http-equiv="cleartype" content="on">
 
-        {% load staticfiles %}
+        {% load static %}
 
         <!-- favicon 16px and 32px combined -->
         <link rel="shortcut icon" href="{% static 'uw/ico/favicon.ico' %}" type="image/x-icon">
@@ -119,7 +119,7 @@
         </div>
 
         <div class="footer">
-            <div class="footer-tagline">Copyright &copy; 2012-{% now "Y" %}<br/>UW Information Technology - ACA</div>
+            <div class="footer-tagline">Copyright &copy; 2012-{% now "Y" %}<br/>UW Information Technology, AXDD</div>
         </div>
 
         <!-- dev bar -->
@@ -129,7 +129,7 @@
 
         <!-- javascript dependencies -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{% static "vendor/js/jquery-1.10.2.min.js" %}"><\/script>')</script>	
+        <script>window.jQuery || document.write('<script src="{% static "vendor/js/jquery-1.10.2.min.js" %}"><\/script>')</script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
         <script src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
