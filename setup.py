@@ -6,7 +6,6 @@ See the README on `GitHub
 <https://github.com/uw-it-aca/django-supporttools>`_.
 """
 
-# The VERSION file is created by travis-ci, based on the tag name
 version_path = 'supporttools/VERSION'
 VERSION = open(os.path.join(os.path.dirname(__file__), version_path)).read()
 VERSION = VERSION.replace("\n", "")
@@ -23,8 +22,7 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'django>2.1,<3.0',
-        'django-compressor==2.2',
+        'django>2.1,<3.2',
         'django-userservice>3.1,<4.0',
         'django-user-agents',
     ],
