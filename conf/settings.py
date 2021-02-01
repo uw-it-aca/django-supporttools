@@ -2,7 +2,6 @@ STATIC_ROOT = ''
 
 INSTALLED_APPS += [
     'supporttools',
-    'compressor',
     'django_user_agents',
 ]
 
