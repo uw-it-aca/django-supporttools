@@ -1,7 +1,7 @@
 # AXDD Support Tools
 
-[![Build Status](https://github.com/uw-it-aca/django-supporttools/workflows/tests/badge.svg?branch=master)](https://github.com/uw-it-aca/django-supporttools/actions)
-[![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/django-supporttools/badge.svg?branch=master)](https://coveralls.io/github/uw-it-aca/django-supporttools?branch=master)
+[![Build Status](https://github.com/uw-it-aca/django-supporttools/workflows/tests/badge.svg?branch=main)](https://github.com/uw-it-aca/django-supporttools/actions)
+[![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/django-supporttools/badge.svg?branch=main)](https://coveralls.io/github/uw-it-aca/django-supporttools?branch=main)
 [![PyPi Version](https://img.shields.io/pypi/v/django-supporttools.svg)](https://pypi.python.org/pypi/django-supporttools)
 ![Python versions](https://img.shields.io/pypi/pyversions/django-supporttools.svg)
 
