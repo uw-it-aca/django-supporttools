@@ -70,7 +70,7 @@ jobs:
           sudo apt-get install python-dev libxml2-dev libxmlsec1-dev
           python -m pip install --upgrade pip
           pip install -e .
-          pip install pycodestyle coverage coveralls==2.2.0
+          pip install coverage coveralls==2.2.0
           npm install -g jshint
 
       - name: Upgrade Django Version
@@ -82,8 +82,11 @@ jobs:
           test -f ${CONF_PATH}/urls.py && cp ${CONF_PATH}/urls.py project/
           test -f ${CONF_PATH}/settings.py && cat ${CONF_PATH}/settings.py >> project/settings.py
 
-      - name: Run Pycodestyle
-        run: pycodestyle ${APP_NAME}/ --exclude=migrations
+      - name: Run Python Linters
+        uses: uw-it-aca/actions/python-linters@main
+        with:
+          app_name: ${APP_NAME}
+          exclude_paths: 'migrations'
 
       - name: Run JSHint
         run: jshint ${APP_NAME}/static/${APP_NAME}/js --verbose
