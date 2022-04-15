@@ -22,7 +22,7 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'django>2.1,<3.2',
+        'django>2.1,<4.0',
         'django-userservice>3.1,<4.0',
         'django-user-agents',
     ],
@@ -36,6 +36,5 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.6',
     ],
 )
