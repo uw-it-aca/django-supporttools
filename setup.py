@@ -22,8 +22,8 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'django>2.1,<4.0',
-        'django-userservice>3.1,<4.0',
+        'django>2.2,<5',
+        'django-userservice',
         'django-user-agents',
     ],
     license='Apache License, Version 2.0',
