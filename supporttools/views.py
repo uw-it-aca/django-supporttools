@@ -1,9 +1,9 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def home(request):
-    return render(request, 'supporttools/home.html', {})
+class HomeView(TemplateView):
+    template_name = 'supporttools/home.html'
