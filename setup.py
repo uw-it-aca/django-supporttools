@@ -22,9 +22,10 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'django>2.1,<4.0',
-        'django-userservice>3.1,<4.0',
+        'Django>2.2,<5',
+        'django-userservice',
         'django-user-agents',
+        'mock',
     ],
     license='Apache License, Version 2.0',
     description=('A Django application used for theming and wrapping '
@@ -36,5 +37,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3.8',
     ],
 )
