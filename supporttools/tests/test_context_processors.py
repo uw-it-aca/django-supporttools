@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -45,7 +45,7 @@ class TestContextProcessors(TestCase):
         with self.settings(GOOGLE_ANALYTICS_KEY="ga_1234"):
             values = has_google_analytics(get_request())
             self.assertTrue(values["has_google_analytics"])
-            self.assertEquals(values["GOOGLE_ANALYTICS_KEY"], "ga_1234")
+            self.assertEqual(values["GOOGLE_ANALYTICS_KEY"], "ga_1234")
 
     def test_missing_google_analytics(self):
         with self.settings(GOOGLE_ANALYTICS_KEY=None):
