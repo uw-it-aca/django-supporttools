@@ -18,18 +18,18 @@ setup(
     name='Django-SupportTools',
     version=VERSION,
     packages=['supporttools'],
-    author="UW-IT AXDD",
+    author="UW-IT T&LS",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'Django>2.2,<5',
+        'Django>3.2,<5',
         'django-userservice',
         'django-user-agents',
         'mock',
     ],
     license='Apache License, Version 2.0',
     description=('A Django application used for theming and wrapping '
-                 'AXDD support tools.'),
+                 'T&LS support tools.'),
     long_description=README,
     url=url,
     classifiers=[
@@ -37,6 +37,5 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.8',
     ],
 )
