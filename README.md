@@ -1,4 +1,4 @@
-# AXDD Support Tools
+# Django Support Tools
 
 [![Build Status](https://github.com/uw-it-aca/django-supporttools/workflows/tests/badge.svg)](https://github.com/uw-it-aca/django-supporttools/actions)
 [![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/django-supporttools/badge.svg?branch=main)](https://coveralls.io/github/uw-it-aca/django-supporttools?branch=main)
@@ -41,7 +41,7 @@ TEMPLATES = [
                 'supporttools.context_processors.has_less_compiled',
             ],
         },
-    },  
+    },
 ]
 
 # Where the back link should go, and how it's labeled.
