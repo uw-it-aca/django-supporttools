@@ -18,18 +18,18 @@ setup(
     name='Django-SupportTools',
     version=VERSION,
     packages=['supporttools'],
-    author="UW-IT T&LS",
+    author="UW-IT Student & Educational Technology Services",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
-        'Django>3.2,<5',
+        'django>3.2,<6',
         'django-userservice',
         'django-user-agents',
         'mock',
     ],
     license='Apache License, Version 2.0',
     description=('A Django application used for theming and wrapping '
-                 'T&LS support tools.'),
+                 'support tools.'),
     long_description=README,
     url=url,
     classifiers=[
