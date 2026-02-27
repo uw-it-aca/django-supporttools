@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/uw-it-aca/django-supporttools/workflows/tests/badge.svg)](https://github.com/uw-it-aca/django-supporttools/actions)
 [![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/django-supporttools/badge.svg?branch=main)](https://coveralls.io/github/uw-it-aca/django-supporttools?branch=main)
 [![PyPi Version](https://img.shields.io/pypi/v/django-supporttools.svg)](https://pypi.python.org/pypi/django-supporttools)
-![Python versions](https://img.shields.io/badge/python-3.10-blue.svg)
+![Python versions](https://img.shields.io/badge/python-3.12-blue.svg)
 
 
 A Django application used for theming and wrapping support tools.

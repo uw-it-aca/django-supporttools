@@ -18,7 +18,7 @@ setup(
     name='Django-SupportTools',
     version=VERSION,
     packages=['supporttools'],
-    author="UW-IT Student & Educational Technology Services",
+    author="UWIT Student & Educational Technology Services",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=[
