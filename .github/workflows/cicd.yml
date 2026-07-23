@@ -38,10 +38,33 @@ on:
     branches: [main, master, qa, develop]
     types: [opened, reopened, synchronize]
   release:
-    branches: [main, master]
     types: [published]
 
 jobs:
+  frontend:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Run Frontend Lint
+        run: npm run lint
+
+      - name: Run Frontend Tests
+        run: npm run test
+
+      - name: Verify Frontend Build
+        run: npm run build
+
   test:
     runs-on: ubuntu-24.04
 
@@ -115,7 +138,7 @@ jobs:
   publish:
     if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags')
 
-    needs: test
+    needs: [frontend, test]
 
     runs-on: ubuntu-24.04
 

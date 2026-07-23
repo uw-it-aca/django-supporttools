@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.test import TestCase
 from django.conf import settings
 from supporttools.context_processors import (
-    has_less_compiled, has_google_analytics)
+    has_less_compiled, has_google_analytics, supportools_globals)
 from supporttools.tests import get_request
 
 
@@ -51,6 +51,42 @@ class TestContextProcessors(TestCase):
         with self.settings(GOOGLE_ANALYTICS_KEY=None):
             values = has_google_analytics(get_request())
             self.assertFalse(values["has_google_analytics"])
+
+    def test_supporttools_globals_defaults(self):
+        values = supportools_globals(get_request())
+        self.assertFalse(values["supporttools_vue_enabled"])
+        self.assertIn("supporttools_view_registry", values)
+        self.assertIn("supporttools_vue_context", values)
+        self.assertIn("links", values["supporttools_vue_context"])
+
+    def test_supporttools_globals_from_extra_views(self):
+        with self.settings(SUPPORTTOOLS_EXTRA_VIEWS={
+                "Support Home": "supporttools_home"}):
+            values = supportools_globals(get_request())
+            labels = [entry["label"] for entry in
+                      values["supporttools_view_registry"]]
+            self.assertIn("Support Home", labels)
+
+    def test_supporttools_globals_registry_preferred(self):
+        with self.settings(
+                SUPPORTTOOLS_EXTRA_VIEWS={"Legacy Link": "supporttools_home"},
+                SUPPORTTOOLS_VIEW_REGISTRY=[{
+                    "id": "explicit-home",
+                    "label": "Explicit Home",
+                    "url_name": "supporttools_home",
+                    "section": "application",
+                    "order": 1,
+                }]):
+            values = supportools_globals(get_request())
+            labels = [entry["label"] for entry in
+                      values["supporttools_view_registry"]]
+            self.assertIn("Explicit Home", labels)
+            self.assertNotIn("Legacy Link", labels)
+
+    def test_supporttools_vue_enabled_true(self):
+        with self.settings(SUPPORTTOOLS_VUE_ENABLED=True):
+            values = supportools_globals(get_request())
+            self.assertTrue(values["supporttools_vue_enabled"])
 
     def test_user_agents(self):
         # No user agent
