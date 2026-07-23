@@ -4,9 +4,16 @@ import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   build: {
-    manifest: true,
+    manifest: false,
     rollupOptions: {
       input: ["./supporttools_vue/main.js"],
+      output: {
+        // Fixed filenames so assets can be shipped with the package
+        // and served via Django's collectstatic without a manifest lookup.
+        entryFileNames: "supporttools/js/[name].js",
+        chunkFileNames: "supporttools/js/[name].js",
+        assetFileNames: "supporttools/css/[name][extname]",
+      },
     },
     outDir: "./supporttools/static/",
     assetsDir: "supporttools/assets",

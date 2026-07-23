@@ -58,7 +58,6 @@
 
         {% if supporttools_vue_enabled %}
         {{ supporttools_vue_context|json_script:"supporttools-vue-context" }}
-        {% vite_styles 'supporttools_vue/main.js' %}
         {% endif %}
 
         {% block extra_css %}{% endblock %}
@@ -153,7 +152,7 @@
         <!-- local javascript -->
         <script src="{% static 'supporttools/js/main.js' %}"></script>
         {% if supporttools_vue_enabled %}
-        {% vite_scripts 'supporttools_vue/main.js' %}
+        <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
         {% endif %}
         {% block extra_js %}{% endblock %}
     </body>

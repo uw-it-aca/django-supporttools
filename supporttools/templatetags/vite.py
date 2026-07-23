@@ -46,7 +46,9 @@ def vite_manifest(entry_names):
             if name in processed:
                 continue
 
-            chunk = manifest[name]
+            chunk = manifest.get(name)
+            if chunk is None:
+                continue
             import_scripts, import_styles = process_entries(
                 chunk.get("imports", [])
             )
