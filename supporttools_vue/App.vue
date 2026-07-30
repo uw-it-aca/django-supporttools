@@ -37,12 +37,20 @@ export default {
         return acc;
       }, {});
 
+      const sectionOrder = { general: 0, application: 1 };
       return Object.keys(groups)
-        .sort()
+        .sort(
+          (a, b) =>
+            (sectionOrder[a] ?? 99) - (sectionOrder[b] ?? 99)
+        )
         .map((section) => ({
           section,
           title: sectionLabels[section] || section,
-          links: groups[section],
+          links: groups[section].slice().sort(
+            (a, b) =>
+              (a.order ?? 100) - (b.order ?? 100) ||
+              a.label.localeCompare(b.label)
+          ),
         }));
     },
   },

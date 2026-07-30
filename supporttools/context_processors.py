@@ -16,30 +16,30 @@ def _resolve_url(url_name, url_args=None, url_kwargs=None):
 def _default_view_registry(request):
     entries = []
     defaults = [
-        ("Support Home", "supporttools_home"),
-        ("User Override", "userservice_override"),
-        ("Status", "status_app.views.status"),
-        ("Persistent Messages", "manage_persistent_messages"),
-        ("Browse Student Web Service", "restclients_proxy",
+        (10, "Support Home", "supporttools_home"),
+        (20, "User Override", "userservice_override"),
+        (30, "Status", "status_app.views.status"),
+        (40, "Persistent Messages", "manage_persistent_messages"),
+        (50, "Browse Student Web Service", "restclients_proxy",
          ("sws", "student/v5.json"), {}),
-        ("Browse Person Web Service", "restclients_proxy",
+        (60, "Browse Person Web Service", "restclients_proxy",
          ("pws", "identity/v2.json"), {}),
     ]
 
     for row in defaults:
-        if len(row) == 2:
-            label, url_name = row
+        if len(row) == 3:
+            order, label, url_name = row
             url_args = ()
             url_kwargs = {}
         else:
-            label, url_name, url_args, url_kwargs = row
+            order, label, url_name, url_args, url_kwargs = row
 
         url = _resolve_url(url_name, url_args=url_args, url_kwargs=url_kwargs)
         if url:
             entries.append({
                 "id": url_name,
                 "section": "general",
-                "order": 0,
+                "order": order,
                 "label": label,
                 "url_name": url_name,
                 "url": url,
@@ -107,14 +107,17 @@ def _settings_view_registry(request):
 
 
 def _effective_view_registry(request):
-    # If registry is configured, prefer it. Otherwise adapt legacy extra views.
-    configured = _settings_view_registry(request)
-    if configured:
-        extra_entries = configured
-    else:
-        extra_entries = _extra_views_registry(request)
+    # Structured VIEW_REGISTRY (preferred) and legacy EXTRA_VIEWS are both
+    # always included so that enabling SUPPORTTOOLS_VUE_ENABLED alone is
+    # sufficient for apps that already have SUPPORTTOOLS_EXTRA_VIEWS set.
+    # VIEW_REGISTRY entries take precedence; duplicates are dropped by url_name.
+    structured = _settings_view_registry(request)
+    legacy = _extra_views_registry(request)
 
-    combined = _default_view_registry(request) + extra_entries
+    seen = {e["url_name"] for e in structured}
+    merged = structured + [e for e in legacy if e["url_name"] not in seen]
+
+    combined = _default_view_registry(request) + merged
     return sorted(combined, key=lambda e: (e["section"], e["order"],
                                            e["label"].lower()))
 

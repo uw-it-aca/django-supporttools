@@ -149,8 +149,35 @@
             };
         </script>
 
-        <!-- local javascript -->
-        <script src="{% static 'supporttools/js/main.js' %}"></script>
+        <!-- sidebar toggle (replaces legacy jQuery main.js behaviour) -->
+        <script>
+            (function () {
+                var menu = document.getElementById('tool_menu');
+                var btn  = document.getElementById('tool_menu_button');
+                if (!menu) return;
+                // Auto-show on desktop (>= 1000px), hide on smaller viewports
+                function applyLayout() {
+                    if (window.matchMedia('(min-width: 1000px)').matches) {
+                        menu.classList.remove('hide-div');
+                        menu.classList.add('show-div');
+                    } else {
+                        menu.classList.add('hide-div');
+                        menu.classList.remove('show-div');
+                    }
+                }
+                applyLayout();
+                window.addEventListener('resize', applyLayout);
+                if (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        menu.classList.toggle('hide-div');
+                        menu.classList.toggle('show-div');
+                    });
+                }
+            })();
+        </script>
+
+        <!-- vue nav bundle (module load only) -->
         {% if supporttools_vue_enabled %}
         <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
         {% endif %}
