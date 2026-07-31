@@ -68,11 +68,42 @@ SUPPORTTOOLS_VIEW_REGISTRY = [
         "url_kwargs": {},
     }
 ]
+
+# Optional: mixed navigation support for incremental migration.
+# Legacy tools can stay server-rendered; converted Vue tools are SPA-only.
+# mode defaults to "server" only for legacy entries.
+# Entries with SPA marker fields (route/component_key/vite_entry)
+# are treated as "spa" even if mode is omitted.
+#
+# SPA-mode fields:
+#   route          – URL path the component is served at (must match a Django URL pattern)
+#   component_key  – key used to look up the component in window.supporttoolsSpaComponents
+#   vite_entry     – Vite asset path; passed to {% vite_scripts %} in the generic SPA template
+#   view           – dotted import path to the Django view class (optional; see SUPPORTTOOLS_DEFAULT_SPA_VIEW)
+SUPPORTTOOLS_VIEW_REGISTRY = [
+  {
+    "id": "retention-admin",
+    "section": "application",
+    "order": 20,
+    "label": "Retention Admin",
+    "url_name": "retention_admin",
+    "mode": "spa",
+    "route": "/support/retention_admin/",
+    "component_key": "retention_admin",
+    "vite_entry": "myapp_vue/support/retention-admin.js",
+    "view": "myapp.views.support.retention.RetentionAdminView",  # omit to use the default SPA view
+  }
+]
+
+# Optional: default view class for auto-registered SPA tools.
+# Used when a registry entry omits the "view" key.
+# Typically a project-specific subclass of SpaToolView that adds authentication.
+SUPPORTTOOLS_DEFAULT_SPA_VIEW = "myapp.views.support.base.MySpaToolView"
 ```
 
 ### Migrating to Vue
 
-Apps can migrate incrementally across three phases. Each phase is independently
+Apps can migrate incrementally across four phases. Each phase is independently
 testable and reversible before moving to the next.
 
 ---
@@ -141,84 +172,123 @@ and can be removed.
 
 ---
 
-#### Phase 3 — Convert individual pages to Vue
+#### Phase 3 — Set up shared SPA infrastructure (once per project)
 
-Each page can be converted independently without affecting other tools.
+Complete this once before converting any individual tool in Phase 4.
 
-**1. Serialize the page data in the Django view**
-
-Replace queryset context variables with JSON-serialisable dicts. `DateTimeField`
-values must be converted with `.isoformat()`:
+**1. Create a project-level SPA view base** that adds your auth decorator:
 
 ```python
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['page_data'] = [
-        {
-            'id': obj.id,
-            'created': obj.created.isoformat() if obj.created else None,
-            'name': obj.name,
-        }
-        for obj in MyModel.objects.all()
-    ]
-    return context
+# myapp/views/support/base.py
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from uw_saml.decorators import group_required
+from supporttools.views import SpaToolView
+
+@method_decorator(group_required(settings.MY_SUPPORT_GROUP), name='dispatch')
+class MySpaToolView(SpaToolView):
+    pass
 ```
 
-**2. Replace the template with a mount point**
+**2. Add the default view and auto-register URLs** in your settings and `urls.py`:
 
-```django
-{% extends 'supporttools/base.html' %}
-{% load vite %}
-
-{% block content %}
-  {{ page_data|json_script:"my-tool-data" }}
-  <div id="my-tool-app"></div>
-{% endblock content %}
-
-{% block extra_js %}
-  {% vite_scripts 'myapp_vue/support/my-tool.js' %}
-{% endblock %}
+```python
+# settings.py
+SUPPORTTOOLS_DEFAULT_SPA_VIEW = "myapp.views.support.base.MySpaToolView"
 ```
 
-**3. Create the Vue entry point**
+```python
+# your ROOT_URLCONF module (for example: project/urls.py or docker/urls.py)
+from supporttools.urls import get_registry_urlpatterns
+
+urlpatterns += get_registry_urlpatterns()  # reads SUPPORTTOOLS_VIEW_REGISTRY
+```
+
+**3. Auto-discover Vite entry points** by editing your existing `vite.config.js`
+so new tools are picked up automatically:
+
+Add/merge the snippet below into your current Vite config. Do not replace the
+entire file.
 
 ```javascript
-// myapp_vue/support/my-tool.js
-import { createApp } from "vue";
-import MyTool from "./MyTool.vue";
+// vite.config.js
+import { readdirSync } from "fs";
 
-const target = document.getElementById("my-tool-app");
-const raw = document.getElementById("my-tool-data");
+const supportEntries = readdirSync("./myapp_vue/support")
+  .filter((f) => f.endsWith(".js"))
+  .map((f) => `./myapp_vue/support/${f}`);
 
-if (target && raw) {
-  const items = JSON.parse(raw.textContent || "[]");
-  createApp(MyTool, { items }).mount(target);
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: ["./myapp_vue/main.js", ...supportEntries],
+    },
+  },
+});
+```
+
+---
+
+#### Phase 4 — Convert individual pages to Vue
+
+Each page can be converted independently without affecting other tools.
+Legacy tools can remain server-rendered while converted tools use SPA nav.
+
+- `mode: "server"` (default for legacy entries): normal full-page navigation.
+- `mode: "spa"`: client-side navigation — no full-page reload when the sidebar
+  link is clicked.
+- Converted Vue tools are SPA-only. If `route`, `component_key`, or
+  `vite_entry` is present, the entry is normalized to `mode: "spa"`.
+
+Data access is owned by the tool component. A tool can pre-load data from
+the server on direct URL navigation, and fetch from API endpoints when
+mounted via SPA navigation. This direct-URL bootstrap uses the SPA view
+template; it is not a fallback to server-navigation mode.
+
+---
+
+##### Adding a new SPA tool
+
+**1. Register the tool in `SUPPORTTOOLS_VIEW_REGISTRY`**
+
+```python
+{
+    "id": "my-tool",
+    "section": "application",
+    "order": 10,
+    "label": "My Tool",
+    "url_name": "my_tool",
+    "mode": "spa",
+    "route": "/support/my_tool/",
+    "component_key": "my_tool",
+    "vite_entry": "myapp_vue/support/my-tool.js",
+    # "view": "myapp.views.support.my_tool.MyToolView"  # only needed for custom server data
 }
 ```
 
-**4. Create the Vue component**
+The URL is auto-registered by `get_registry_urlpatterns()`. No `urls.py` edit needed.
 
-Use Bootstrap 3 table classes — the supporttools base template loads Bootstrap 3:
+**2. Create the Vue entry point** (the entire file):
+
+```javascript
+// myapp_vue/support/my-tool.js
+window.supporttoolsRegisterSpaTool("my_tool", () => import("./MyTool.vue"));
+```
+
+`window.supporttoolsRegisterSpaTool` is provided by the supporttools bundle
+already loaded in `base.html`. It handles both SPA-nav mounting (via the
+sidebar) and direct-URL mounting (via server-rendered JSON). No imports needed.
+
+**3. Create the Vue component**
+
+The component receives a `pageData` prop on direct-URL load (populated from
+server-rendered JSON), and a `tool` prop when mounted via SPA navigation:
 
 ```vue
 <template>
   <div>
     <h1>My Tool</h1>
-    <table class="table table-striped">
-      <thead>
-        <tr><th>ID</th><th>Created</th><th>Name</th></tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.id">
-          <td>{{ item.id }}</td>
-          <td>{{ item.created }}</td>
-          <td>{{ item.name }}</td>
-        </tr>
-        <tr v-if="items.length === 0">
-          <td colspan="3">No items found.</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- your UI -->
   </div>
 </template>
 
@@ -226,22 +296,49 @@ Use Bootstrap 3 table classes — the supporttools base template loads Bootstrap
 export default {
   name: "MyTool",
   props: {
-    items: { type: Array, default: () => [] },
+    pageData: { type: Object, default: () => ({}) },
+    tool: { type: Object, default: null },
+  },
+  async mounted() {
+    // When mounted via SPA nav, pageData is empty — fetch fresh data from API.
+    if (this.tool && this.tool.mode === "spa") {
+      await this.loadData();
+    }
+  },
+  methods: {
+    async loadData() { /* fetch from your API endpoint */ },
   },
 };
 </script>
 ```
 
-**5. Register the entry point in vite.config.js**
+**That's all that's needed for a tool with no server-side bootstrap data.**
 
-```javascript
-rollupOptions: {
-  input: [
-    "./myapp_vue/main.js",
-    "./myapp_vue/support/my-tool.js",  // add this
-  ],
-},
+---
+
+##### Adding server-side bootstrap data (optional)
+
+If the tool needs data pre-loaded on direct URL navigation, create a
+Django view that inherits from your project's SPA view base and overrides
+`get_page_data()`. The data is serialised to JSON and passed as the
+`pageData` prop automatically by the generic `spa_tool.html` template.
+
+```python
+# myapp/views/support/my_tool.py
+from myapp.views.support.base import MySpaToolView
+
+class MyToolView(MySpaToolView):
+    def get_page_data(self):
+        return {
+            'items': [
+                {'id': obj.id, 'name': obj.name}
+                for obj in MyModel.objects.all()
+            ]
+        }
 ```
+
+Then add `"view": "myapp.views.support.my_tool.MyToolView"` to the registry
+entry. No template file needed — `spa_tool.html` is used automatically.
 
 ---
 

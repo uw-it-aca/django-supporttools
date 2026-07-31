@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/test-utils": "^2.4.11",
     "jsdom": "^28.0.0",
     "oxlint": "^1.43.0",
     "sass": "^1.101.0",

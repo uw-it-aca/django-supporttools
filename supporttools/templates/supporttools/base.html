@@ -37,6 +37,14 @@
         <meta name="msapplication-wide310x150logo" content="{% static 'uw/ico/win8-310x150.png' %}" />
         <meta name="msapplication-square310x310logo" content="{% static 'uw/ico/win8-310x310.png' %}" />
 
+        <!-- Load the supporttools Vue bundle early (deferred module, but
+             document-order before any mid-body sidebar tool scripts) so that
+             window.supporttoolsRegisterSpaTool is defined before tool entry
+             scripts execute. -->
+        {% if supporttools_vue_enabled %}
+        <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
+        {% endif %}
+
         <!-- google fonts -->
         <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700,200' rel='stylesheet' type='text/css'>
 
@@ -118,10 +126,18 @@
 
         <div class="content">
             <div class="content-inner">
+            <div id="supporttools-page-content">
             <!-- add your site or application content here -->
             {% block content %}{% endblock %}
             </div>
-        </div>
+            {% if supporttools_vue_enabled %}
+            <div id="supporttools-spa-shell" style="margin-top: 15px; display: none;">
+                <h2 id="supporttools-spa-title" class="h3"></h2>
+                <div id="supporttools-spa-outlet"></div>
+            </div>
+            {% endif %}
+                </div>
+            </div>
 
         <div class="footer">
             <div class="footer-tagline">Copyright &copy; {% now "Y" %} University of Washington</div>
@@ -177,10 +193,6 @@
             })();
         </script>
 
-        <!-- vue nav bundle (module load only) -->
-        {% if supporttools_vue_enabled %}
-        <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
-        {% endif %}
         {% block extra_js %}{% endblock %}
     </body>
 </html>

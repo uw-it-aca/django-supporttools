@@ -32,6 +32,9 @@ htmlcov/
 .tox/
 .coverage
 .cache
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 nosetests.xml
 coverage.xml
 
@@ -49,6 +52,10 @@ coverage.xml
 # Django stuff:
 *.log
 *.pot
+db.sqlite3
+*.sqlite3
+manage.py
+project/
 
 # Sphinx documentation
 docs/_build/

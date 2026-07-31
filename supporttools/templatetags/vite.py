@@ -4,9 +4,11 @@
 
 import json
 import os
+
 from django import template
 from django.conf import settings
 from django.templatetags.static import static
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 register = template.Library()
@@ -69,7 +71,7 @@ def vite_styles(*entry_names):
     _, styles = vite_manifest(entry_names)
 
     def as_link_tag(href):
-        return f'<link rel="stylesheet" href="{static(href)}" />'
+        return format_html('<link rel="stylesheet" href="{}" />', static(href))
 
     return mark_safe("\n".join(map(as_link_tag, styles)))
 
@@ -79,6 +81,6 @@ def vite_scripts(*entry_names):
     scripts, _ = vite_manifest(entry_names)
 
     def as_script_tag(src):
-        return f'<script type="module" src="{static(src)}"></script>'
+        return format_html('<script type="module" src="{}"></script>', static(src))
 
     return mark_safe("\n".join(map(as_script_tag, scripts)))

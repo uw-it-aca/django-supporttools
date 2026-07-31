@@ -6,7 +6,12 @@
       </h3>
       <ul class="nav flex-column mb-2">
         <li v-for="item in group.links" :key="item.id" class="nav-item">
-          <a :href="item.url" class="nav-link text-white py-1 px-2">
+          <a
+            :href="item.url"
+            class="nav-link text-white py-1 px-2"
+            :class="{ active: isActive(item) }"
+            @click="onToolClick($event, item)"
+          >
             {{ item.label }}
           </a>
         </li>
@@ -23,6 +28,22 @@ export default {
       type: Object,
       default: () => ({}),
     },
+  },
+  data() {
+    return {
+      currentPath: window.location.pathname,
+    };
+  },
+  mounted() {
+    this.onPathChange = () => {
+      this.currentPath = window.location.pathname;
+    };
+    window.addEventListener("popstate", this.onPathChange);
+    window.addEventListener("supporttools-spa:navigated", this.onPathChange);
+  },
+  beforeUnmount() {
+    window.removeEventListener("popstate", this.onPathChange);
+    window.removeEventListener("supporttools-spa:navigated", this.onPathChange);
   },
   computed: {
     groupedLinks() {
@@ -56,6 +77,26 @@ export default {
               a.label.localeCompare(b.label)
           ),
         }));
+    },
+  },
+  methods: {
+    isActive(item) {
+      if (item.mode === "spa" && item.route) {
+        return this.currentPath === item.route;
+      }
+      return this.currentPath === item.url;
+    },
+    onToolClick(event, item) {
+      if (
+        item.mode !== "spa" ||
+        !item.route ||
+        !item.component_key
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      this.$emit("navigate-spa", item);
     },
   },
 };

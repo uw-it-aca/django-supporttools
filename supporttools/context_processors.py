@@ -1,9 +1,48 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import logging
+
 from django.conf import settings
 from django.urls import NoReverseMatch, reverse
 from userservice.user import UserService
+
+logger = logging.getLogger(__name__)
+
+
+def _normalize_mode_fields(entry):
+    # Treat entries with SPA markers as converted tools, even if mode is
+    # omitted. Legacy server tools do not include these fields.
+    is_converted = any(
+        entry.get(key) for key in ("route", "component_key", "vite_entry")
+    )
+    mode = entry.get("mode", "server")
+    if mode not in {"server", "spa"}:
+        mode = "server"
+    if is_converted:
+        mode = "spa"
+
+    route = entry.get("route")
+    component_key = entry.get("component_key")
+    # Converted tools are SPA-only; full reload is not supported for them.
+    requires_full_reload = False
+
+    # A SPA entry must declare both route and component_key. Converted tools
+    # that fail this contract are dropped from the Vue registry.
+    if mode == "spa" and not (route and component_key):
+        logger.warning(
+            "Skipping invalid SPA supporttools registry entry %r: "
+            "route and component_key are required for converted tools.",
+            entry.get("id") or entry.get("url_name") or entry.get("label"),
+        )
+        return None
+
+    return {
+        "mode": mode,
+        "route": route,
+        "component_key": component_key,
+        "requires_full_reload": requires_full_reload,
+    }
 
 
 def _resolve_url(url_name, url_args=None, url_kwargs=None):
@@ -45,6 +84,10 @@ def _default_view_registry(request):
                 "url": url,
                 "url_args": list(url_args),
                 "url_kwargs": url_kwargs,
+                "mode": "server",
+                "route": None,
+                "component_key": None,
+                "requires_full_reload": False,
             })
 
     return entries
@@ -68,6 +111,10 @@ def _extra_views_registry(request):
             "url": url,
             "url_args": [],
             "url_kwargs": {},
+            "mode": "server",
+            "route": None,
+            "component_key": None,
+            "requires_full_reload": False,
         })
 
     return entries
@@ -92,6 +139,9 @@ def _settings_view_registry(request):
         if not url:
             continue
 
+        mode_fields = _normalize_mode_fields(entry)
+        if not mode_fields:
+            continue
         entries.append({
             "id": entry.get("id") or url_name,
             "section": entry.get("section") or "application",
@@ -101,6 +151,7 @@ def _settings_view_registry(request):
             "url": url,
             "url_args": list(url_args),
             "url_kwargs": dict(url_kwargs),
+            **mode_fields,
         })
 
     return entries

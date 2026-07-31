@@ -1,0 +1,14 @@
+{% extends 'supporttools/base.html' %}
+{% load vite %}
+{% load static %}
+
+{% block content %}
+  <div id="spa-tool-app"></div>
+{% endblock content %}
+
+{% block extra_js %}
+  {% if not supporttools_vue_enabled %}
+    <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
+  {% endif %}
+  {% if vite_entry %}{% vite_scripts vite_entry %}{% endif %}
+{% endblock %}
