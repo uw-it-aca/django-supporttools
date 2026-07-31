@@ -70,146 +70,186 @@ SUPPORTTOOLS_VIEW_REGISTRY = [
 ]
 ```
 
-### Migrating jQuery-Based Tools to Vue
+### Migrating to Vue
 
-Apps that use `django-supporttools` can migrate gradually. The intent is to
-avoid a large rewrite and keep existing tool URLs and wrappers working while
-you move page logic from jQuery to Vue.
+Apps can migrate incrementally across three phases. Each phase is independently
+testable and reversible before moving to the next.
 
-#### Recommended Migration Strategy
+---
 
-1. **Keep supporttools in legacy mode first**
-     - Leave `SUPPORTTOOLS_VUE_ENABLED = False`.
-     - Keep your existing jQuery tool templates/views unchanged.
+#### Phase 1 — Enable the Vue nav shell (zero-config)
 
-2. **Adopt structured navigation data**
-     - Add `SUPPORTTOOLS_VIEW_REGISTRY` entries for your tools.
-     - Keep existing `SUPPORTTOOLS_EXTRA_VIEWS` during transition if needed.
-     - When both are present, `SUPPORTTOOLS_VIEW_REGISTRY` is preferred.
-
-3. **Convert one tool at a time**
-     - Keep the same Django URL/view contract for each tool where possible.
-     - Render a page-level mount element (for example, `<div id="tool-app"></div>`)
-         from your existing Django template.
-     - Move behavior from jQuery handlers to Vue components/composables in small
-         slices (form state, table actions, filters, then remaining UI logic).
-
-4. **Introduce Vue assets for the converted tool**
-     - Build the new tool bundle with Vite and include it from your template.
-     - Keep non-migrated tools on legacy scripts until they are converted.
-
-5. **Enable Vue supporttools shell when ready**
-     - Set `SUPPORTTOOLS_VUE_ENABLED = True` after validating the new nav shell
-         in your environment.
-     - Keep this feature flag available for rollback during rollout.
-
-#### Compatibility Notes
-
-- Existing `supporttools` wrappers and URL routes can remain in place.
-- You do not need to migrate all tools at once.
-- Server-rendered Django views remain valid; Vue can be layered on top of
-    existing templates.
-- Prefer preserving URL names and response shapes so external integrations and
-    tests require minimal change.
-
-#### Suggested Rollout Checklist
-
-- Add one pilot tool to `SUPPORTTOOLS_VIEW_REGISTRY`.
-- Verify navigation, permissions, and URL resolution in supporttools pages.
-- Run frontend checks (`lint`, unit tests, build) and backend tests in CI.
-- Migrate additional tools incrementally after the pilot is stable.
-
-#### Example: Migrating an Existing Admin Tool
-
-You can migrate an existing admin tool to Vue without changing its public URL
-or supporttools link label.
-
-1. Keep the same Django route name and path:
+Set the feature flag in your settings file:
 
 ```python
-# project/urls.py
-from django.urls import path
-from project.views.tools import custom_support_tool
-
-urlpatterns = [
-    path(
-        "custom-support-tool/",
-        custom_support_tool,
-        name="custom_support_tool",
-    ),
-]
+SUPPORTTOOLS_VUE_ENABLED = True
 ```
 
-2. Register the same URL in supporttools navigation:
+That is the only required change. When the flag is on, the Vue nav shell
+mounts on `#supporttools-vue-nav` and automatically harvests links from the
+server-rendered `{% sidebar_links %}` output already present in the DOM — so
+your existing `custom_sidebar_links.html` override (if any) keeps working with
+no changes.
+
+**Verify**: the sidebar renders the same links as before, the hamburger toggle
+works on mobile viewports, and there are no JS errors in the browser console.
+
+---
+
+#### Phase 2 — Register your tools explicitly (optional but recommended)
+
+DOM harvesting from Phase 1 works but provides no control over labels,
+ordering, or section grouping. Registering tools in settings gives Vue the
+structured data it needs.
+
+**Option A — simple dict (lowest friction first step):**
+
+```python
+# settings.py
+SUPPORTTOOLS_EXTRA_VIEWS = {
+    "My Tool": "my_tool_url_name",
+    "Another Tool": "another_tool_url_name",
+}
+```
+
+**Option B — structured registry (preferred for new work):**
 
 ```python
 # settings.py
 SUPPORTTOOLS_VIEW_REGISTRY = [
     {
-        "id": "custom-support-tool",
+        "id": "my-tool",
+        "section": "application",
+        "order": 10,
+        "label": "My Tool",
+        "url_name": "my_tool_url_name",
+    },
+    {
+        "id": "another-tool",
         "section": "application",
         "order": 20,
-        "label": "Custom Support Tool",
-        "url_name": "custom_support_tool",
+        "label": "Another Tool",
+        "url_name": "another_tool_url_name",
     },
 ]
 ```
 
-3. Keep the Django view, but switch template internals to a Vue mount:
+When `SUPPORTTOOLS_VIEW_REGISTRY` is set it takes precedence; entries from
+`SUPPORTTOOLS_EXTRA_VIEWS` are merged in as a supplement. Once your tools are
+registered here the `custom_sidebar_links.html` template override is redundant
+and can be removed.
+
+---
+
+#### Phase 3 — Convert individual pages to Vue
+
+Each page can be converted independently without affecting other tools.
+
+**1. Serialize the page data in the Django view**
+
+Replace queryset context variables with JSON-serialisable dicts. `DateTimeField`
+values must be converted with `.isoformat()`:
 
 ```python
-# project/views/tools.py
-from django.shortcuts import render
-
-
-def custom_support_tool(request):
-    page_context = {
-        "initial_filters": {},
-        "api_base": "/api/custom-tool/",
-    }
-    return render(
-        request,
-        "project/custom_support_tool.html",
-        {"tool_page_context": page_context},
-    )
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['page_data'] = [
+        {
+            'id': obj.id,
+            'created': obj.created.isoformat() if obj.created else None,
+            'name': obj.name,
+        }
+        for obj in MyModel.objects.all()
+    ]
+    return context
 ```
+
+**2. Replace the template with a mount point**
 
 ```django
-{# project/templates/project/custom_support_tool.html #}
-{% extends "supporttools/base.html" %}
-{% load static %}
+{% extends 'supporttools/base.html' %}
+{% load vite %}
 
 {% block content %}
-    {{ tool_page_context|json_script:"tool-page-context" }}
-    <div id="custom-support-tool-app"></div>
-{% endblock %}
+  {{ page_data|json_script:"my-tool-data" }}
+  <div id="my-tool-app"></div>
+{% endblock content %}
 
 {% block extra_js %}
-        <script type="module" src="{% static 'project/assets/custom-support-tool.js' %}"></script>
+  {% vite_scripts 'myapp_vue/support/my-tool.js' %}
 {% endblock %}
 ```
 
-4. Bootstrap Vue from that mount point:
+**3. Create the Vue entry point**
 
 ```javascript
-// frontend/custom-support-tool/main.js
+// myapp_vue/support/my-tool.js
 import { createApp } from "vue";
-import CustomSupportToolApp from "./App.vue";
+import MyTool from "./MyTool.vue";
 
-const target = document.getElementById("custom-support-tool-app");
-const raw = document.getElementById("tool-page-context");
+const target = document.getElementById("my-tool-app");
+const raw = document.getElementById("my-tool-data");
 
 if (target && raw) {
-  const context = JSON.parse(raw.textContent || "{}");
-    createApp(CustomSupportToolApp, { context }).mount(target);
+  const items = JSON.parse(raw.textContent || "[]");
+  createApp(MyTool, { items }).mount(target);
 }
 ```
 
-5. Move jQuery logic incrementally:
-   - First migrate page state and filters.
-   - Then migrate async table actions and inline edits.
-   - Keep existing backend APIs and payload shapes during transition.
+**4. Create the Vue component**
 
-This pattern lets any app import the new Vue tool through the same
-supporttools wrapper and route name, minimizing changes for users,
-permissions, and integration tests.
+Use Bootstrap 3 table classes — the supporttools base template loads Bootstrap 3:
+
+```vue
+<template>
+  <div>
+    <h1>My Tool</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr><th>ID</th><th>Created</th><th>Name</th></tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in items" :key="item.id">
+          <td>{{ item.id }}</td>
+          <td>{{ item.created }}</td>
+          <td>{{ item.name }}</td>
+        </tr>
+        <tr v-if="items.length === 0">
+          <td colspan="3">No items found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "MyTool",
+  props: {
+    items: { type: Array, default: () => [] },
+  },
+};
+</script>
+```
+
+**5. Register the entry point in vite.config.js**
+
+```javascript
+rollupOptions: {
+  input: [
+    "./myapp_vue/main.js",
+    "./myapp_vue/support/my-tool.js",  // add this
+  ],
+},
+```
+
+---
+
+#### CI/CD note
+
+The compiled bundle at `supporttools/static/supporttools/js/main.js` is built
+at publish time by CI and distributed inside the PyPI wheel. Consuming apps do
+not need Node.js. See `.github/workflows/cicd.yml` for the build step in the
+`publish` job.
+
+
