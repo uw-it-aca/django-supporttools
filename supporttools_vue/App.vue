@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <nav>
     <template v-for="group in groupedLinks" :key="group.section">
-      <h3>{{ group.title }}</h3>
-      <ul>
-        <li v-for="item in group.links" :key="item.id">
-          <a :href="item.url">{{ item.label }}</a>
+      <h3 class="small text-uppercase text-white-50 px-2 mt-3 mb-1">
+        {{ group.title }}
+      </h3>
+      <ul class="nav flex-column mb-2">
+        <li v-for="item in group.links" :key="item.id" class="nav-item">
+          <a :href="item.url" class="nav-link text-white py-1 px-2">
+            {{ item.label }}
+          </a>
         </li>
       </ul>
     </template>
-  </div>
+  </nav>
 </template>
 
 <script>

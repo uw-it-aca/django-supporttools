@@ -1,6 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
+// solstice bootstrap theme + component styles
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "solstice-theme/dist/solstice.scss";
+import "solstice-vue/dist/style.css";
+
 const target = document.getElementById("supporttools-vue-nav");
 const rawContext = document.getElementById("supporttools-vue-context");
 
