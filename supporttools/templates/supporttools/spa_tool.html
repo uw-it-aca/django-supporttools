@@ -7,8 +7,6 @@
 {% endblock content %}
 
 {% block extra_js %}
-  {% if not supporttools_vue_enabled %}
-    <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
-  {% endif %}
+  <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
   {% if vite_entry %}{% vite_scripts vite_entry %}{% endif %}
 {% endblock %}

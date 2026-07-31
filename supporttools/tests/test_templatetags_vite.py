@@ -15,6 +15,9 @@ from supporttools.templatetags.vite import (
 
 
 class TestViteTemplateTags(TestCase):
+    def tearDown(self):
+        _load_manifest.cache_clear()
+
     @patch("supporttools.templatetags.vite.open", new_callable=mock_open)
     @override_settings(VITE_MANIFEST_PATH="/static/.vite/manifest.json")
     def test_vite_styles(self, mocked_open):
@@ -58,6 +61,9 @@ class TestManifestFilepaths(TestCase):
 
 
 class TestLoadManifest(TestCase):
+    def tearDown(self):
+        _load_manifest.cache_clear()
+
     @patch("supporttools.templatetags.vite.open", side_effect=FileNotFoundError)
     def test_raises_when_all_paths_fail(self, _):
         with self.assertRaises(FileNotFoundError):
@@ -73,6 +79,9 @@ class TestLoadManifest(TestCase):
 
 
 class TestViteManifestChainedImports(TestCase):
+    def tearDown(self):
+        _load_manifest.cache_clear()
+
     CHAINED_MANIFEST = """{
         "supporttools_vue/main.js": {
             "file": "supporttools/assets/main.js",
@@ -128,6 +137,9 @@ class TestViteManifestChainedImports(TestCase):
 
 
 class TestViteTagsEscaping(TestCase):
+    def tearDown(self):
+        _load_manifest.cache_clear()
+
     @patch("supporttools.templatetags.vite.open", new_callable=mock_open)
     @override_settings(VITE_MANIFEST_PATH="/static/.vite/manifest.json")
     def test_styles_manifest_path_with_quotes_is_escaped(self, mocked_open):

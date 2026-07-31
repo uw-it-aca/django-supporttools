@@ -168,17 +168,20 @@ def _effective_view_registry(request):
     seen = {e["url_name"] for e in structured}
     merged = structured + [e for e in legacy if e["url_name"] not in seen]
 
-    combined = _default_view_registry(request) + merged
+    seen.update(e["url_name"] for e in merged)
+    defaults = _default_view_registry(request)
+    combined = [e for e in defaults if e["url_name"] not in seen] + merged
     return sorted(combined, key=lambda e: (e["section"], e["order"],
                                            e["label"].lower()))
 
 
 def supportools_globals(request):
+    user = UserService().get_original_user()
     view_registry = _effective_view_registry(request)
     user_agent = getattr(request, "user_agent", None)
 
     params = {
-        "supporttools_user": UserService().get_original_user(),
+        "supporttools_user": user,
         "supporttools_parent_app": getattr(settings,
                                            "SUPPORTTOOLS_PARENT_APP", ""),
         "supporttools_parent_app_url": getattr(settings,
@@ -194,7 +197,7 @@ def supportools_globals(request):
             "parent_app": getattr(settings, "SUPPORTTOOLS_PARENT_APP", ""),
             "parent_app_url": getattr(settings,
                                        "SUPPORTTOOLS_PARENT_APP_URL", "/"),
-            "user": UserService().get_original_user(),
+            "user": user,
             "is_mobile": bool(getattr(user_agent, "is_mobile", False)),
             "is_tablet": bool(getattr(user_agent, "is_tablet", False)),
             "is_desktop": bool(getattr(user_agent, "is_pc", False)),

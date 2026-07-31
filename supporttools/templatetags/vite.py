@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import functools
 import json
+import logging
 import os
 
 from django import template
@@ -12,6 +14,8 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 register = template.Library()
+
+logger = logging.getLogger(__name__)
 
 
 def _manifest_filepaths():
@@ -26,6 +30,7 @@ def _manifest_filepaths():
     return defaults
 
 
+@functools.lru_cache(maxsize=None)
 def _load_manifest():
     for path in _manifest_filepaths():
         try:
@@ -68,7 +73,11 @@ def vite_manifest(entry_names):
 
 @register.simple_tag(name="vite_styles")
 def vite_styles(*entry_names):
-    _, styles = vite_manifest(entry_names)
+    try:
+        _, styles = vite_manifest(entry_names)
+    except FileNotFoundError:
+        logger.warning("vite_styles: manifest not found; no styles emitted")
+        return mark_safe("")
 
     def as_link_tag(href):
         return format_html('<link rel="stylesheet" href="{}" />', static(href))
@@ -78,7 +87,11 @@ def vite_styles(*entry_names):
 
 @register.simple_tag(name="vite_scripts")
 def vite_scripts(*entry_names):
-    scripts, _ = vite_manifest(entry_names)
+    try:
+        scripts, _ = vite_manifest(entry_names)
+    except FileNotFoundError:
+        logger.warning("vite_scripts: manifest not found; no scripts emitted")
+        return mark_safe("")
 
     def as_script_tag(src):
         return format_html('<script type="module" src="{}"></script>', static(src))

@@ -38,6 +38,7 @@ on:
     branches: [main, master, qa, develop]
     types: [opened, reopened, synchronize]
   release:
+    branches: [main, master]
     types: [published]
 
 jobs:
@@ -153,7 +154,7 @@ jobs:
 
       - name: Build Frontend
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Setup Python

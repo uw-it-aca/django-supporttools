@@ -57,6 +57,7 @@ VITE_MANIFEST_PATH = '/static/manifest.json'
 
 # Optional: new structured link registry (preferred over EXTRA_VIEWS
 # when configured).
+# Example A — simple server-rendered tool:
 SUPPORTTOOLS_VIEW_REGISTRY = [
     {
         "id": "app-tool-1",
@@ -69,6 +70,7 @@ SUPPORTTOOLS_VIEW_REGISTRY = [
     }
 ]
 
+# Example B — SPA tool (use one definition, not both):
 # Optional: mixed navigation support for incremental migration.
 # Legacy tools can stay server-rendered; converted Vue tools are SPA-only.
 # mode defaults to "server" only for legacy entries.
@@ -105,6 +107,18 @@ SUPPORTTOOLS_DEFAULT_SPA_VIEW = "myapp.views.support.base.MySpaToolView"
 
 Apps can migrate incrementally across four phases. Each phase is independently
 testable and reversible before moving to the next.
+
+| Phase | What changes | Minimum required |
+|---|---|---|
+| 0 | Nothing — existing server-rendered nav keeps working | No changes required |
+| 1 | Enable the Vue nav shell | One settings flag: `SUPPORTTOOLS_VUE_ENABLED = True` |
+| 2 | Register tools explicitly | Add entries to `SUPPORTTOOLS_VIEW_REGISTRY` (or keep using `SUPPORTTOOLS_EXTRA_VIEWS`) |
+| 3 | Set up shared SPA infrastructure | One base view class, one settings entry, one `urls.py` line, one Vite config snippet |
+| 4 | Convert individual pages to Vue | One registry entry + one JS entry point + one Vue component per tool |
+
+Phases 0–2 require no Node.js and no frontend changes. Phase 3 is a
+one-time project setup. Phase 4 is per-tool and fully incremental — legacy
+tools can remain server-rendered indefinitely.
 
 ---
 
