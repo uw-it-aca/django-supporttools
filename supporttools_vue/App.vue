@@ -8,7 +8,7 @@
         <li v-for="item in group.links" :key="item.id" class="nav-item">
           <a
             :href="item.url"
-            class="nav-link text-white py-1 px-2"
+            class="supporttools-nav-link nav-link text-white px-2"
             :class="{ active: isActive(item) }"
             @click="onToolClick($event, item)"
           >
@@ -56,9 +56,12 @@ export default {
       const groups = links.reduce((acc, link) => {
         const section = link.section || "application";
         if (!acc[section]) {
-          acc[section] = [];
+          acc[section] = {
+            title: link.section_label || sectionLabels[section] || section,
+            links: [],
+          };
         }
-        acc[section].push(link);
+        acc[section].links.push(link);
         return acc;
       }, {});
 
@@ -70,8 +73,8 @@ export default {
         )
         .map((section) => ({
           section,
-          title: sectionLabels[section] || section,
-          links: groups[section].slice().sort(
+          title: groups[section].title,
+          links: groups[section].links.slice().sort(
             (a, b) =>
               (a.order ?? 100) - (b.order ?? 100) ||
               a.label.localeCompare(b.label)

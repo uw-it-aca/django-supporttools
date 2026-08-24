@@ -133,8 +133,8 @@ SUPPORTTOOLS_VUE_ENABLED = True
 That is the only required change. When the flag is on, the Vue nav shell
 mounts on `#supporttools-vue-nav` and automatically harvests links from the
 server-rendered `{% sidebar_links %}` output already present in the DOM — so
-your existing `custom_sidebar_links.html` override (if any) keeps working with
-no changes.
+your existing `custom_sidebar_links.html` override (if any) keeps its section
+headings, link labels, ordering, and visibility rules with no changes.
 
 **Verify**: the sidebar renders the same links as before, the hamburger toggle
 works on mobile viewports, and there are no JS errors in the browser console.
@@ -143,9 +143,10 @@ works on mobile viewports, and there are no JS errors in the browser console.
 
 #### Phase 2 — Register your tools explicitly (optional but recommended)
 
-DOM harvesting from Phase 1 works but provides no control over labels,
-ordering, or section grouping. Registering tools in settings gives Vue the
-structured data it needs.
+The rendered sidebar remains the presentation source of truth while an app is
+migrating. Registering tools in settings adds navigation behavior such as SPA
+routing; explicit registry entries that are not in the rendered sidebar are
+also appended, so tools can be converted incrementally.
 
 **Option A — simple dict (lowest friction first step):**
 

@@ -1,0 +1,58 @@
+import { describe, expect, it } from "vitest";
+import { buildNavigationLinks } from "./main.js";
+
+describe("buildNavigationLinks", () => {
+  it("preserves a custom sidebar's groups, labels, order, and visibility", () => {
+    const target = document.createElement("div");
+    target.innerHTML = `
+      <h3>Overrides</h3>
+      <div><a href="https://example.com/help">Override Help</a></div>
+      <ul><li><a href="/support">User Override</a></li></ul>
+      <h3>Content Management</h3>
+      <ul><li><a href="/messages">Banner Messages</a></li></ul>
+    `;
+    const configured = [
+      { id: "home", label: "Support Home", url: "/" },
+      { id: "override", label: "Override", url: "/support", mode: "server" },
+    ];
+
+    expect(buildNavigationLinks(target, configured)).toEqual([
+      expect.objectContaining({
+        label: "Override Help",
+        section: "rendered-0",
+        section_label: "Overrides",
+        order: 0,
+      }),
+      expect.objectContaining({
+        id: "override",
+        label: "User Override",
+        section: "rendered-0",
+        section_label: "Overrides",
+        order: 1,
+      }),
+      expect.objectContaining({
+        label: "Banner Messages",
+        section: "rendered-1",
+        section_label: "Content Management",
+        order: 0,
+      }),
+    ]);
+  });
+
+  it("appends explicit registry entries missing from the rendered template", () => {
+    const target = document.createElement("div");
+    target.innerHTML = '<h3>Tools</h3><a href="/legacy">Legacy</a>';
+    const configured = [{
+      id: "new-tool",
+      label: "New Tool",
+      url: "/new",
+      section: "application",
+      explicit: true,
+    }];
+
+    expect(buildNavigationLinks(target, configured).map((link) => link.id)).toEqual([
+      "/legacy",
+      "new-tool",
+    ]);
+  });
+});

@@ -51,6 +51,53 @@ function findSpaToolByPath(links, path) {
   return links.find((link) => isValidSpaTool(link) && link.route === path) || null;
 }
 
+export function buildNavigationLinks(target, configuredLinks = []) {
+  const configuredByUrl = new Map(
+    configuredLinks.map((link) => [link.url, link])
+  );
+  const renderedUrls = new Set();
+  let sectionIndex = -1;
+  let section = "application";
+  let sectionLabel = "Application Tools";
+  let order = 0;
+
+  const renderedLinks = Array.from(target.querySelectorAll("h3, a")).reduce(
+    (links, element) => {
+      if (element.tagName === "H3") {
+        sectionIndex += 1;
+        section = `rendered-${sectionIndex}`;
+        sectionLabel = element.textContent.trim();
+        order = 0;
+        return links;
+      }
+
+      const url = element.getAttribute("href");
+      if (!url || renderedUrls.has(url)) {
+        return links;
+      }
+
+      const configured = configuredByUrl.get(url) || {};
+      links.push({
+        ...configured,
+        id: configured.id || url,
+        section,
+        section_label: sectionLabel,
+        order: order++,
+        label: element.textContent.trim(),
+        url,
+      });
+      renderedUrls.add(url);
+      return links;
+    },
+    []
+  );
+
+  const explicitAdditions = configuredLinks.filter(
+    (link) => link.explicit && !renderedUrls.has(link.url)
+  );
+  return [...renderedLinks, ...explicitAdditions];
+}
+
 function setOutletTitle(tool) {
   if (!outletTitle) {
     return;
@@ -143,34 +190,7 @@ async function navigateSpa(item, links, push = true) {
 
 if (target && rawContext) {
   const context = JSON.parse(rawContext.textContent || "{}");
-
-  // Harvest any extra links already rendered by the server-side sidebar
-  // template (e.g. custom_sidebar_links.html) that are not yet covered by
-  // context.links.  This lets consuming apps get zero-config Vue nav on
-  // step 1 of migration — just setting SUPPORTTOOLS_VUE_ENABLED = True is
-  // enough; no settings registry changes are required.
-  const knownUrls = new Set((context.links || []).map((l) => l.url));
-  const domLinks = Array.from(target.querySelectorAll("a")).reduce(
-    (acc, a) => {
-      const url = a.getAttribute("href");
-      if (url && !knownUrls.has(url)) {
-        acc.push({
-          id: url,
-          section: "application",
-          order: 100,
-          label: a.textContent.trim(),
-          url,
-          url_args: [],
-          url_kwargs: {},
-        });
-        knownUrls.add(url);
-      }
-      return acc;
-    },
-    []
-  );
-
-  const allLinks = [...(context.links || []), ...domLinks];
+  const allLinks = buildNavigationLinks(target, context.links);
 
   const onNavigateSpa = (item) => {
     navigateSpa(item, allLinks, true);

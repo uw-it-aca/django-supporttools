@@ -145,6 +145,7 @@ def _settings_view_registry(request):
         entries.append({
             "id": entry.get("id") or url_name,
             "section": entry.get("section") or "application",
+            "explicit": True,
             "order": int(entry.get("order", 100)),
             "label": label,
             "url_name": url_name,

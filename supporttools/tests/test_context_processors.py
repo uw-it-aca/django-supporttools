@@ -99,6 +99,7 @@ class TestContextProcessors(TestCase):
                 entry for entry in values["supporttools_view_registry"]
                 if entry["id"] == "explicit-home"
             )
+            self.assertTrue(target["explicit"])
             self.assertEqual(target["mode"], "server")
             self.assertIsNone(target["route"])
             self.assertIsNone(target["component_key"])

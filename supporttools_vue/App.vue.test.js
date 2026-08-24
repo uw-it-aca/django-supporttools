@@ -64,6 +64,15 @@ describe("groupedLinks", () => {
     const wrapper = mount(App, { props: { context: { links: [link] } } });
     expect(wrapper.vm.groupedLinks[0].section).toBe("application");
   });
+
+  it("uses section labels harvested from a custom sidebar", () => {
+    const link = makeLink({
+      section: "rendered-0",
+      section_label: "Content Management",
+    });
+    const wrapper = mount(App, { props: { context: { links: [link] } } });
+    expect(wrapper.vm.groupedLinks[0].title).toBe("Content Management");
+  });
 });
 
 describe("isActive", () => {
