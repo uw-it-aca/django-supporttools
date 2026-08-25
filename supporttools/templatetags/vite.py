@@ -30,7 +30,7 @@ def _manifest_filepaths():
     return defaults
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def _load_manifest():
     for path in _manifest_filepaths():
         try:
