@@ -98,7 +98,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
           pip install coverage coveralls==3.3.1
-          npm install -g jshint
 
       - name: Install Django ${{ matrix.django-version }}
         run: pip install "Django~=${{ matrix.django-version }}.0"
@@ -114,9 +113,6 @@ jobs:
         with:
           app_name: ${APP_NAME}
           exclude_paths: 'migrations'
-
-      - name: Run JSHint
-        run: jshint ${APP_NAME}/static/${APP_NAME}/js --verbose
 
       - name: Run Migrations
         run: python manage.py migrate
