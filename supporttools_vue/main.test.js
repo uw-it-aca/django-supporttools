@@ -3,6 +3,8 @@ import {
   buildNavigationLinks,
   getDirectPageData,
   loadSpaComponent,
+  restoreServerDocumentTitle,
+  setSpaDocumentTitle,
 } from "./main.js";
 
 describe("buildNavigationLinks", () => {
@@ -94,5 +96,19 @@ describe("loadSpaComponent", () => {
     await expect(
       loadSpaComponent(() => Promise.reject(new Error("chunk unavailable")))
     ).resolves.toBeNull();
+  });
+});
+
+describe("SPA document title", () => {
+  it("updates and restores the server-rendered document title", () => {
+    const serverTitle = document.title;
+
+    setSpaDocumentTitle("Person Search");
+    expect(document.title).toBe(
+      serverTitle ? `Person Search - ${serverTitle}` : "Person Search"
+    );
+
+    restoreServerDocumentTitle();
+    expect(document.title).toBe(serverTitle);
   });
 });

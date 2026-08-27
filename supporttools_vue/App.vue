@@ -1,15 +1,20 @@
 <template>
-  <nav>
+  <nav class="supporttools-nav" aria-label="Tool navigation">
     <template v-for="group in groupedLinks" :key="group.section">
-      <h3 class="small text-uppercase text-white-50 px-2 mt-3 mb-1">
+      <h3 class="supporttools-nav-heading">
         {{ group.title }}
       </h3>
-      <ul class="nav flex-column mb-2">
-        <li v-for="item in group.links" :key="item.id" class="nav-item">
+      <ul class="supporttools-nav-group">
+        <li
+          v-for="item in group.links"
+          :key="item.id"
+          class="supporttools-nav-item"
+        >
           <a
             :href="item.url"
-            class="supporttools-nav-link nav-link text-white px-2"
-            :class="{ active: isActive(item) }"
+            class="supporttools-nav-link"
+            :class="{ 'supporttools-nav-link--active': isActive(item) }"
+            :aria-current="isActive(item) ? 'page' : null"
             @click="onToolClick($event, item)"
           >
             {{ item.label }}

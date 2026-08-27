@@ -5,6 +5,7 @@ import App from "./App.vue";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "solstice-theme/dist/solstice.scss";
 import "solstice-vue/dist/style.css";
+import "./supporttools-shell.scss";
 
 // Expose a registration helper for SPA tool entry points.  Tool scripts call
 // window.supporttoolsRegisterSpaTool(componentKey, importFn) which:
@@ -56,6 +57,7 @@ const outlet = document.getElementById("supporttools-spa-outlet");
 const outletTitle = document.getElementById("supporttools-spa-title");
 const spaShell = document.getElementById("supporttools-spa-shell");
 const pageContent = document.getElementById("supporttools-page-content");
+const serverDocumentTitle = document.title;
 
 const mountedApps = [];
 
@@ -124,8 +126,20 @@ function setOutletTitle(tool) {
     return;
   }
 
-  outletTitle.textContent = tool.title || tool.label || "Tool";
+  const title = tool.title || tool.label || "Tool";
+  outletTitle.textContent = title;
+  setSpaDocumentTitle(title);
   outletTitle.style.display = "block";
+}
+
+export function setSpaDocumentTitle(title) {
+  document.title = serverDocumentTitle
+    ? `${title} - ${serverDocumentTitle}`
+    : title;
+}
+
+export function restoreServerDocumentTitle() {
+  document.title = serverDocumentTitle;
 }
 
 async function renderSpaTool(tool, links) {
@@ -178,6 +192,7 @@ function hideSpaOutlet() {
   if (spaShell) spaShell.style.display = "none";
   if (pageContent) pageContent.style.display = "block";
   if (outletTitle) outletTitle.textContent = "";
+  restoreServerDocumentTitle();
 }
 
 async function navigateSpa(item, links, push = true) {

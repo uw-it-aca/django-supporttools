@@ -135,9 +135,9 @@
             {% block content %}{% endblock %}
             </div>
             {% if supporttools_vue_enabled %}
-            <div id="supporttools-spa-shell" style="margin-top: 15px; display: none;">
-                <h2 id="supporttools-spa-title" class="h3"></h2>
-                <div id="supporttools-spa-outlet"></div>
+            <div id="supporttools-spa-shell" class="supporttools-spa-shell" style="display: none;">
+                <h2 id="supporttools-spa-title" class="supporttools-spa-title"></h2>
+                <div id="supporttools-spa-outlet" aria-live="polite"></div>
             </div>
             {% endif %}
                 </div>

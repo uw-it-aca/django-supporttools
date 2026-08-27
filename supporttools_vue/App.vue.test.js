@@ -75,6 +75,23 @@ describe("groupedLinks", () => {
   });
 });
 
+describe("navigation accessibility", () => {
+  it("names the navigation landmark and marks the active page", () => {
+    const link = makeLink({ url: window.location.pathname });
+    const wrapper = mount(App, { props: { context: { links: [link] } } });
+
+    expect(wrapper.get("nav").attributes("aria-label")).toBe("Tool navigation");
+    expect(wrapper.get(".supporttools-nav-group").exists()).toBe(true);
+    expect(wrapper.get(".supporttools-nav-heading").text()).toBe(
+      "Application Tools"
+    );
+
+    const activeLink = wrapper.get(".supporttools-nav-link");
+    expect(activeLink.attributes("aria-current")).toBe("page");
+    expect(activeLink.classes()).toContain("supporttools-nav-link--active");
+  });
+});
+
 describe("isActive", () => {
   it("matches SPA route against currentPath", () => {
     const item = makeLink({
