@@ -129,7 +129,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
-        run: coveralls
+        run: |
+          python -m coverage combine
+          coveralls
         continue-on-error: true
 
   publish:
