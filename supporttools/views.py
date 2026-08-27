@@ -19,6 +19,9 @@ class SpaToolView(TemplateView):
 
     template_name = 'supporttools/spa_tool.html'
 
+    def get_page_data(self):
+        return {}
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         registry = getattr(settings, 'SUPPORTTOOLS_VIEW_REGISTRY', [])
@@ -30,4 +33,5 @@ class SpaToolView(TemplateView):
             (e for e in registry if e.get('url_name') == url_name), {}
         )
         context['vite_entry'] = entry.get('vite_entry', '')
+        context['page_data'] = self.get_page_data()
         return context

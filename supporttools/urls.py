@@ -5,14 +5,12 @@
 import re
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.urls import re_path
 from django.utils.module_loading import import_string
 
-from supporttools.views import HomeView, SpaToolView
-
-urlpatterns = [
-    re_path(r'^', HomeView.as_view(), name='supporttools_home'),
-]
+from supporttools.context_processors import normalize_mode_fields
+from supporttools.views import HomeView
 
 
 def get_registry_urlpatterns():
@@ -22,7 +20,9 @@ def get_registry_urlpatterns():
     created using whichever view class is resolved in this order:
       1. Entry's own "view" key (dotted import path)
       2. SUPPORTTOOLS_DEFAULT_SPA_VIEW setting (dotted import path)
-      3. SpaToolView fallback
+
+    Each generated SPA route must use an explicitly configured view so that
+    consuming applications cannot accidentally omit their auth policy.
     """
     registry = getattr(settings, 'SUPPORTTOOLS_VIEW_REGISTRY', [])
     default_view_path = getattr(
@@ -31,7 +31,8 @@ def get_registry_urlpatterns():
 
     patterns = []
     for entry in registry:
-        if entry.get('mode') != 'spa':
+        mode_fields = normalize_mode_fields(entry)
+        if not mode_fields or mode_fields['mode'] != 'spa':
             continue
         url_name = entry.get('url_name')
         route = entry.get('route')
@@ -39,10 +40,14 @@ def get_registry_urlpatterns():
             continue
 
         view_path = entry.get('view') or default_view_path
-        if view_path:
-            view_class = import_string(view_path)
-        else:
-            view_class = SpaToolView
+        if not view_path:
+            raise ImproperlyConfigured(
+                "SPA supporttools registry entry {!r} must define 'view' or "
+                "SUPPORTTOOLS_DEFAULT_SPA_VIEW must be configured.".format(
+                    entry.get('id') or url_name
+                )
+            )
+        view_class = import_string(view_path)
 
         # Escape the literal route string for use as a regex pattern,
         # then anchor it so it matches only that exact path.
@@ -52,3 +57,10 @@ def get_registry_urlpatterns():
         )
 
     return patterns
+
+
+# SPA routes must precede the legacy catch-all home route so direct navigation
+# resolves to the configured SPA view.
+urlpatterns = get_registry_urlpatterns() + [
+    re_path(r'^', HomeView.as_view(), name='supporttools_home'),
+]

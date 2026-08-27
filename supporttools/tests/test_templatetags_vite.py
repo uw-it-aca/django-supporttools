@@ -163,4 +163,3 @@ class TestViteTagsEscaping(TestCase):
         }"""
         script_tag = vite_scripts("supporttools_vue/main.js")
         self.assertNotIn('src=""', script_tag)
-

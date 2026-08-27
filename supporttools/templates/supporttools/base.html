@@ -65,6 +65,10 @@
         {% endif %}
 
         {% if supporttools_vue_enabled %}
+        <link rel="stylesheet" href="{% static 'supporttools/css/main.css' %}">
+        {% endif %}
+
+        {% if supporttools_vue_enabled %}
         {{ supporttools_vue_context|json_script:"supporttools-vue-context" }}
         {% endif %}
 

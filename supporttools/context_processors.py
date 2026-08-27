@@ -10,7 +10,7 @@ from userservice.user import UserService
 logger = logging.getLogger(__name__)
 
 
-def _normalize_mode_fields(entry):
+def normalize_mode_fields(entry):
     # Treat entries with SPA markers as converted tools, even if mode is
     # omitted. Legacy server tools do not include these fields.
     is_converted = any(
@@ -139,7 +139,7 @@ def _settings_view_registry(request):
         if not url:
             continue
 
-        mode_fields = _normalize_mode_fields(entry)
+        mode_fields = normalize_mode_fields(entry)
         if not mode_fields:
             continue
         entries.append({

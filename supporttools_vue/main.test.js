@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { buildNavigationLinks } from "./main.js";
+import {
+  buildNavigationLinks,
+  getDirectPageData,
+  loadSpaComponent,
+} from "./main.js";
 
 describe("buildNavigationLinks", () => {
   it("preserves a custom sidebar's groups, labels, order, and visibility", () => {
@@ -54,5 +58,41 @@ describe("buildNavigationLinks", () => {
       "/legacy",
       "new-tool",
     ]);
+  });
+});
+
+describe("getDirectPageData", () => {
+  it("returns page data serialized by the SPA template", () => {
+    document.body.innerHTML = `
+      <script id="supporttools-spa-page-data" type="application/json">
+        {"items":[{"name":"Example"}]}
+      </script>
+    `;
+
+    expect(getDirectPageData()).toEqual({
+      items: [{ name: "Example" }],
+    });
+  });
+
+  it("returns an empty object without page data", () => {
+    document.body.innerHTML = "";
+
+    expect(getDirectPageData()).toEqual({});
+  });
+});
+
+describe("loadSpaComponent", () => {
+  it("returns the default component export", async () => {
+    const component = { name: "MyTool" };
+
+    await expect(
+      loadSpaComponent(() => Promise.resolve({ default: component }))
+    ).resolves.toBe(component);
+  });
+
+  it("returns null when a component import fails", async () => {
+    await expect(
+      loadSpaComponent(() => Promise.reject(new Error("chunk unavailable")))
+    ).resolves.toBeNull();
   });
 });

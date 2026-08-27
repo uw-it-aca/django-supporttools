@@ -4,7 +4,12 @@
 
 {% block content %}
   <div id="spa-tool-app"></div>
+  {{ page_data|json_script:"supporttools-spa-page-data" }}
 {% endblock content %}
+
+{% block extra_css %}
+  {% if vite_entry %}{% vite_styles vite_entry %}{% endif %}
+{% endblock %}
 
 {% block extra_js %}
   <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>

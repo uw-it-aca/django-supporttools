@@ -20,14 +20,35 @@ window.supporttoolsRegisterSpaTool = function (componentKey, importFn) {
 
   const target = document.getElementById("spa-tool-app");
   if (target) {
-    importFn().then(function (mod) {
-      const component = mod && (mod.default || mod);
+    loadSpaComponent(importFn).then(function (component) {
       if (component) {
-        createApp(component).mount(target);
+        createApp(component, { pageData: getDirectPageData() }).mount(target);
       }
     });
   }
 };
+
+export async function loadSpaComponent(loadComponent) {
+  try {
+    const mod = await loadComponent();
+    return mod && (mod.default || mod);
+  } catch {
+    return null;
+  }
+}
+
+export function getDirectPageData() {
+  const pageData = document.getElementById("supporttools-spa-page-data");
+  if (!pageData) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(pageData.textContent || "{}");
+  } catch {
+    return {};
+  }
+}
 
 const target = document.getElementById("supporttools-vue-nav");
 const rawContext = document.getElementById("supporttools-vue-context");
@@ -118,8 +139,7 @@ async function renderSpaTool(tool, links) {
     return false;
   }
 
-  const mod = await loadComponent();
-  const component = mod && (mod.default || mod);
+  const component = await loadSpaComponent(loadComponent);
   if (!component) {
     return false;
   }
