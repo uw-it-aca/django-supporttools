@@ -1,3 +1,6 @@
+{% load static %}
+{% load sidebar_links %}
+{% load vite %}
 <!DOCTYPE html>
 <html class="no-js">
     <head>
@@ -9,9 +12,6 @@
         <meta name="MobileOptimized" content="320">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
         <meta http-equiv="cleartype" content="on">
-
-        {% load static %}
-
         <!-- favicon 16px and 32px combined -->
         <link rel="shortcut icon" href="{% static 'uw/ico/favicon.ico' %}" type="image/x-icon">
 
@@ -37,6 +37,14 @@
         <meta name="msapplication-wide310x150logo" content="{% static 'uw/ico/win8-310x150.png' %}" />
         <meta name="msapplication-square310x310logo" content="{% static 'uw/ico/win8-310x310.png' %}" />
 
+        <!-- Load the supporttools Vue bundle early (deferred module, but
+             document-order before any mid-body sidebar tool scripts) so that
+             window.supporttoolsRegisterSpaTool is defined before tool entry
+             scripts execute. -->
+        {% if supporttools_vue_enabled %}
+        <script type="module" src="{% static 'supporttools/js/main.js' %}"></script>
+        {% endif %}
+
         <!-- google fonts -->
         <link href='//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700,200' rel='stylesheet' type='text/css'>
 
@@ -54,6 +62,14 @@
         {% if not request.is_mobile and not request.is_tablet %}
         <!-- add desktop styles -->
         <link rel="stylesheet" type="text/less" href="{% static 'supporttools/css/desktop.less' %}">
+        {% endif %}
+
+        {% if supporttools_vue_enabled %}
+        <link rel="stylesheet" href="{% static 'supporttools/css/main.css' %}">
+        {% endif %}
+
+        {% if supporttools_vue_enabled %}
+        {{ supporttools_vue_context|json_script:"supporttools-vue-context" }}
         {% endif %}
 
         {% block extra_css %}{% endblock %}
@@ -87,8 +103,9 @@
                     <h2 class="sr-only">Tool Navigation</h2>
 
                     <div class="tool-list-inner">
-                        {% load sidebar_links %}
-                        {% sidebar_links %}
+                        <div id="supporttools-vue-nav">
+                            {% sidebar_links %}
+                        </div>
                     </div>
 
                 </div>
@@ -113,10 +130,18 @@
 
         <div class="content">
             <div class="content-inner">
+            <div id="supporttools-page-content">
             <!-- add your site or application content here -->
             {% block content %}{% endblock %}
             </div>
-        </div>
+            {% if supporttools_vue_enabled %}
+            <div id="supporttools-spa-shell" class="supporttools-spa-shell" style="display: none;">
+                <h2 id="supporttools-spa-title" class="supporttools-spa-title"></h2>
+                <div id="supporttools-spa-outlet" aria-live="polite"></div>
+            </div>
+            {% endif %}
+                </div>
+            </div>
 
         <div class="footer">
             <div class="footer-tagline">Copyright &copy; {% now "Y" %} University of Washington</div>
@@ -144,8 +169,34 @@
             };
         </script>
 
-        <!-- local javascript -->
-        <script src="{% static 'supporttools/js/main.js' %}"></script>
+        <!-- sidebar toggle (replaces legacy jQuery main.js behaviour) -->
+        <script>
+            (function () {
+                var menu = document.getElementById('tool_menu');
+                var btn  = document.getElementById('tool_menu_button');
+                if (!menu) return;
+                // Auto-show on desktop (>= 1000px), hide on smaller viewports
+                function applyLayout() {
+                    if (window.matchMedia('(min-width: 1000px)').matches) {
+                        menu.classList.remove('hide-div');
+                        menu.classList.add('show-div');
+                    } else {
+                        menu.classList.add('hide-div');
+                        menu.classList.remove('show-div');
+                    }
+                }
+                applyLayout();
+                window.addEventListener('resize', applyLayout);
+                if (btn) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        menu.classList.toggle('hide-div');
+                        menu.classList.toggle('show-div');
+                    });
+                }
+            })();
+        </script>
+
         {% block extra_js %}{% endblock %}
     </body>
 </html>
