@@ -266,6 +266,27 @@ assets with `npm run build` before `collectstatic`, and configure
 `VITE_MANIFEST_PATH` to the generated manifest's filesystem path. The generic
 SPA template loads both the entry's JavaScript and its manifest-listed CSS.
 
+**Still on webpack, not Vite?** `{% vite_scripts %}`/`{% vite_styles %}` only
+read a JSON manifest matching Vite's manifest shape
+(`{"entry": {"file", "css", "imports"}}`) at `VITE_MANIFEST_PATH` — nothing
+requires the file to be produced by the Vite CLI. You do not need to migrate
+your existing webpack build to adopt SPA tool pages. Two options:
+
+- **Option A — run Vite alongside webpack (recommended):** Add a second,
+  minimal `vite.config.js` that only builds new SPA tool entry points (as
+  shown above) into their own output directory, and point
+  `VITE_MANIFEST_PATH` at its generated `manifest.json`. Leave your existing
+  webpack config, `webpack-stats.json`, and `WEBPACK_LOADER` setup untouched
+  for all current bundles — the two bundlers coexist, one per generation of
+  tool pages.
+
+- **Option B — emit a Vite-shaped manifest from webpack:** Add a small
+  webpack plugin or post-build script that writes a `manifest.json` in the
+  same shape from your existing webpack output, so `vite_scripts`/
+  `vite_styles` work without introducing Vite tooling at all. This avoids a
+  second build pipeline but requires maintaining the conversion shim as your
+  webpack config evolves.
+
 ---
 
 #### Phase 4 — Convert individual pages to Vue
