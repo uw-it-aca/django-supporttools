@@ -54,6 +54,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Setup npm
+        run: npm install --global npm@11.10.0
+
       - name: Install Frontend Dependencies
         run: npm install
 
@@ -149,6 +152,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Setup npm
+        run: npm install --global npm@11.10.0
 
       - name: Build Frontend
         run: |
