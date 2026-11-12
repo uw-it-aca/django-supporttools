@@ -1,0 +1,87 @@
+#supporttools-vue-nav {
+  --supporttools-nav-surface: #32006e;
+  --supporttools-nav-text: #ffffff;
+  --supporttools-nav-muted: #f1e9ff;
+  --supporttools-nav-focus: #ffbc24;
+
+  background-color: var(--supporttools-nav-surface);
+  padding: 0.75rem;
+}
+
+#supporttools-vue-nav .supporttools-nav-group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#supporttools-vue-nav .supporttools-nav-group + .supporttools-nav-heading {
+  margin-top: 1.5rem;
+}
+
+#supporttools-vue-nav .supporttools-nav-heading {
+  color: var(--supporttools-nav-muted);
+  font-family: "Encode Sans Condensed", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin: 0.75rem 0 0.5rem;
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+}
+
+#supporttools-vue-nav .supporttools-nav-item {
+  margin: 0;
+}
+
+#supporttools-vue-nav .supporttools-nav-link {
+  align-items: center;
+  border-inline-start: 0.25rem solid transparent;
+  color: var(--supporttools-nav-text);
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.75rem;
+  text-decoration: none;
+}
+
+#supporttools-vue-nav .supporttools-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: var(--supporttools-nav-text);
+  text-decoration: underline;
+}
+
+#supporttools-vue-nav .supporttools-nav-link:focus-visible {
+  outline: 0.1875rem solid var(--supporttools-nav-focus);
+  outline-offset: -0.1875rem;
+}
+
+#supporttools-vue-nav .supporttools-nav-link.supporttools-nav-link--active {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-inline-start-color: var(--supporttools-nav-focus);
+  color: var(--supporttools-nav-text);
+  font-weight: 700;
+}
+
+#supporttools-spa-shell.supporttools-spa-shell {
+  margin-top: 1rem;
+}
+
+#supporttools-spa-title.supporttools-spa-title {
+  color: #32006e;
+  font-family: "Encode Sans Condensed", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+@media (min-width: 1000px) {
+  #supporttools-vue-nav {
+    padding: 1rem;
+  }
+}

@@ -1,2 +1,7 @@
 {% extends 'supporttools/base.html' %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'supporttools/js/restclients.js' %}"></script>
+{% endblock %}
 

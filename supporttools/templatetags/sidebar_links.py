@@ -15,7 +15,7 @@ def do_sidebar_links(parser, token):
     try:
         template.loader.get_template(custom_template)
         return IncludeNode(parser.compile_filter(
-            "'{}'".format(custom_template)))
+            f"'{custom_template}'"))
     except template.TemplateDoesNotExist:
         return IncludeNode(parser.compile_filter(
-            "'{}'".format(default_template)))
+            f"'{default_template}'"))
