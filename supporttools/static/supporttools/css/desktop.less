@@ -19,34 +19,48 @@
     height: auto;
     width: 260px; max-width: 260px;
     margin-bottom: 0;
-    
+
     /* inline media query for desktop */
     @media @desktop { width: 280px; max-width: 280px; }
-    
+
     .header-inner {
-    
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 65px;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+
         .tool-app {}
-        
-        .tool-header { 
-            h1.tool-name { 
-                
-                a { text-decoration: none; 
+
+        .tool-header {
+            h1.tool-name {
+
+                a { text-decoration: none;
                     &:hover { text-decoration: underline; }
                 }
-                
+
             }
         }
         .tool-list { background:none;
-            
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            max-height: none;
+
             -moz-transition: 0;
             -ms-transition: 0;
             -o-transition: 0;
             -webkit-transition: 0;
             transition: 0;
-            
-            .tool-list-inner { 
+
+            .tool-list-inner {
                 margin: 0;
                 margin-top: 20px;
+                flex: 1;
+                min-height: 0;
                 overflow-y: auto;
             }
         }
@@ -55,33 +69,33 @@
 }
 
 .content {
-    
+
     .content-inner { padding: 0 25px; }
     .container { }
-    
+
     margin-right: auto;
     margin-left: 260px;
-    
-    @media @desktop { 
+
+    @media @desktop {
         margin-left: 280px;
     }
-    
+
     .navbar { margin: 1em 0; }
 }
 
 
 .footer { position: fixed; left: 0; bottom: 0; z-index: 100; margin: 0; border-top:  solid 1px darken(@sidebar, 5%); width: 260px; padding: 15px 10px; height: 65px;
-    
-    @media @desktop { 
-        width: 280px; 
+
+    @media @desktop {
+        width: 280px;
     }
-    
+
     .footer-tagline { font-size: .85em; }
 }
 
 
-.user-service { 
-    
+.user-service {
+
     position: absolute;
     top: 50%;
     margin-top: -80px;
