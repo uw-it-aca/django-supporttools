@@ -1,0 +1,8 @@
+[run]
+source = supporttools
+parallel = True
+
+[paths]
+source =
+  supporttools/
+  /app/supporttools/

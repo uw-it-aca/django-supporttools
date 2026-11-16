@@ -2,11 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.urls import reverse
 from django.test import TestCase
-from django.conf import settings
+from django.urls import reverse
+
 from supporttools.context_processors import (
-    has_less_compiled, has_google_analytics)
+    has_google_analytics,
+    has_less_compiled,
+    supportools_globals,
+)
 from supporttools.tests import get_request
 
 
@@ -51,6 +54,131 @@ class TestContextProcessors(TestCase):
         with self.settings(GOOGLE_ANALYTICS_KEY=None):
             values = has_google_analytics(get_request())
             self.assertFalse(values["has_google_analytics"])
+
+    def test_supporttools_globals_defaults(self):
+        values = supportools_globals(get_request())
+        self.assertFalse(values["supporttools_vue_enabled"])
+        self.assertIn("supporttools_view_registry", values)
+        self.assertIn("supporttools_vue_context", values)
+        self.assertIn("links", values["supporttools_vue_context"])
+
+    def test_supporttools_globals_from_extra_views(self):
+        with self.settings(SUPPORTTOOLS_EXTRA_VIEWS={
+                "Support Home": "supporttools_home"}):
+            values = supportools_globals(get_request())
+            labels = [entry["label"] for entry in
+                      values["supporttools_view_registry"]]
+            self.assertIn("Support Home", labels)
+
+    def test_supporttools_globals_registry_preferred(self):
+        with self.settings(
+                SUPPORTTOOLS_EXTRA_VIEWS={"Legacy Link": "supporttools_home"},
+                SUPPORTTOOLS_VIEW_REGISTRY=[{
+                    "id": "explicit-home",
+                    "label": "Explicit Home",
+                    "url_name": "supporttools_home",
+                    "section": "application",
+                    "order": 1,
+                }]):
+            values = supportools_globals(get_request())
+            labels = [entry["label"] for entry in
+                      values["supporttools_view_registry"]]
+            self.assertIn("Explicit Home", labels)
+            self.assertNotIn("Legacy Link", labels)
+
+    def test_supporttools_registry_default_mode_fields(self):
+        with self.settings(SUPPORTTOOLS_VIEW_REGISTRY=[{
+            "id": "explicit-home",
+            "label": "Explicit Home",
+            "url_name": "supporttools_home",
+            "section": "application",
+            "order": 1,
+        }]):
+            values = supportools_globals(get_request())
+            target = next(
+                entry for entry in values["supporttools_view_registry"]
+                if entry["id"] == "explicit-home"
+            )
+            self.assertTrue(target["explicit"])
+            self.assertEqual(target["mode"], "server")
+            self.assertIsNone(target["route"])
+            self.assertIsNone(target["component_key"])
+            self.assertFalse(target["requires_full_reload"])
+
+    def test_supporttools_registry_valid_spa_fields(self):
+        with self.settings(SUPPORTTOOLS_VIEW_REGISTRY=[{
+            "id": "explicit-home",
+            "label": "Explicit Home",
+            "url_name": "supporttools_home",
+            "mode": "spa",
+            "route": "/support/tools/home",
+            "component_key": "home_tool",
+        }]):
+            values = supportools_globals(get_request())
+            target = next(
+                entry for entry in values["supporttools_view_registry"]
+                if entry["id"] == "explicit-home"
+            )
+            self.assertEqual(target["mode"], "spa")
+            self.assertEqual(target["route"], "/support/tools/home")
+            self.assertEqual(target["component_key"], "home_tool")
+
+    def test_supporttools_registry_converted_entry_enforces_spa(self):
+        with self.settings(SUPPORTTOOLS_VIEW_REGISTRY=[{
+            "id": "explicit-home",
+            "label": "Explicit Home",
+            "url_name": "supporttools_home",
+            # Mode omitted, but SPA marker fields imply conversion.
+            "route": "/support/tools/home",
+            "component_key": "home_tool",
+            "vite_entry": "supporttools_vue/support/home.js",
+        }]):
+            values = supportools_globals(get_request())
+            target = next(
+                entry for entry in values["supporttools_view_registry"]
+                if entry["id"] == "explicit-home"
+            )
+            self.assertEqual(target["mode"], "spa")
+            self.assertEqual(target["route"], "/support/tools/home")
+            self.assertEqual(target["component_key"], "home_tool")
+
+    def test_supporttools_registry_invalid_spa_fields_are_skipped(self):
+        with self.settings(SUPPORTTOOLS_VIEW_REGISTRY=[{
+            "id": "explicit-home",
+            "label": "Explicit Home",
+            "url_name": "supporttools_home",
+            "mode": "spa",
+            "route": "/support/tools/home",
+            # missing component_key -> invalid converted entry
+        }]):
+            values = supportools_globals(get_request())
+            self.assertFalse(any(
+                entry["id"] == "explicit-home"
+                for entry in values["supporttools_view_registry"]
+            ))
+
+    def test_supporttools_registry_invalid_spa_fields_logs_warning(self):
+        with self.settings(SUPPORTTOOLS_VIEW_REGISTRY=[{
+            "id": "explicit-home",
+            "label": "Explicit Home",
+            "url_name": "supporttools_home",
+            "mode": "spa",
+            "route": "/support/tools/home",
+            # missing component_key -> invalid converted entry
+        }]):
+            with self.assertLogs("supporttools.context_processors",
+                                 level="WARNING") as log_ctx:
+                supportools_globals(get_request())
+
+            self.assertTrue(any(
+                "Skipping invalid SPA supporttools registry entry" in msg
+                for msg in log_ctx.output
+            ))
+
+    def test_supporttools_vue_enabled_true(self):
+        with self.settings(SUPPORTTOOLS_VUE_ENABLED=True):
+            values = supportools_globals(get_request())
+            self.assertTrue(values["supporttools_vue_enabled"])
 
     def test_user_agents(self):
         # No user agent
